@@ -199,45 +199,67 @@ h1 {
     Juntos pela nossa escola.
 </footer>
 
-
 <script>
 
-<script>
+async function testarSupabase() {
 
-async function carregarAgenda() {
+    const destaque = document.querySelector(".destaque");
 
     try {
 
+        destaque.querySelector("h2").textContent = "🔄 Testando conexão...";
+
+        destaque.querySelector("p").textContent =
+            "Conectando ao banco online...";
+
+        if (typeof supabaseClient === "undefined") {
+
+            throw new Error(
+                "supabaseClient não foi encontrado."
+            );
+
+        }
+
         const { data, error } = await supabaseClient
             .from("agenda")
-            .select("*")
-            .order("data", { ascending: true })
-            .order("hora", { ascending: true });
+            .select("*");
 
         if (error) {
-            console.error("Erro ao carregar agenda:", error);
+            throw error;
+        }
+
+        console.log("DADOS DO SUPABASE:", data);
+
+        if (!data || data.length === 0) {
+
+            destaque.querySelector("h2").textContent =
+                "⚠️ Nenhum evento encontrado";
+
+            destaque.querySelector("p").textContent =
+                "A conexão funcionou, mas a tabela agenda está vazia.";
+
             return;
         }
 
-        console.log("Agenda carregada:", data);
+        const evento = data[0];
 
-        if (data && data.length > 0) {
+        destaque.querySelector("h2").textContent =
+            evento.titulo;
 
-            const evento = data[0];
-
-            document.querySelector(".destaque h2").textContent =
-                evento.titulo;
-
-            document.querySelector(".destaque p").textContent =
-                `${evento.data} ${evento.hora ? "• " + evento.hora : ""} ${
-                    evento.local ? "• " + evento.local : ""
-                }`;
-
-        }
+        destaque.querySelector("p").textContent =
+            evento.data +
+            (evento.hora ? " • " + evento.hora : "") +
+            (evento.local ? " • " + evento.local : "");
 
     } catch (erro) {
 
-        console.error("Erro:", erro);
+        console.error("ERRO SUPABASE:", erro);
+
+        destaque.querySelector("h2").textContent =
+            "❌ Erro na conexão";
+
+        destaque.querySelector("p").textContent =
+            erro.message || "Erro desconhecido.";
 
     }
 
@@ -248,7 +270,7 @@ function abrir(pagina) {
 
     if (pagina === "agenda") {
 
-        alert("📅 A Agenda online está sendo carregada!");
+        testarSupabase();
 
         return;
     }
@@ -261,9 +283,6 @@ function abrir(pagina) {
     );
 
 }
-
-
-carregarAgenda();
 
 </script>
 
