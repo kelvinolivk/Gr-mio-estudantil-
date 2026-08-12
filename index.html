@@ -111,12 +111,98 @@ h1 {
     font-size: 13px;
 }
 
+
+/* ========================= */
+/* TELA DA AGENDA */
+/* ========================= */
+
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+.topo-tela {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.voltar {
+    background: #28233a;
+    border: 1px solid #493d65;
+    color: white;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.titulo-tela {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.evento {
+    background: #1a1925;
+    border: 1px solid #39324d;
+    border-left: 5px solid #7651a8;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
+
+.evento-data {
+    color: #d6b56a;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.evento h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.evento p {
+    margin: 6px 0;
+    color: #c8c4d2;
+    line-height: 1.5;
+}
+
+.sem-eventos {
+    text-align: center;
+    padding: 35px 15px;
+    color: #aaa5b6;
+    background: #181720;
+    border-radius: 16px;
+    border: 1px solid #302b40;
+}
+
+.carregando {
+    text-align: center;
+    padding: 30px;
+    color: #c8c3d8;
+}
+
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+
 </head>
 
 <body>
+
+
+<!-- ========================= -->
+<!-- INÍCIO -->
+<!-- ========================= -->
+
+<div id="inicio">
 
 <header class="header">
 
@@ -130,15 +216,18 @@ h1 {
 
 </header>
 
+
 <main class="container">
 
     <section class="destaque">
 
         <small>📢 DESTAQUE</small>
 
-        <h2>Bem-vindo ao Grêmio!</h2>
+        <h2 id="tituloDestaque">
+            Bem-vindo ao Grêmio!
+        </h2>
 
-        <p>
+        <p id="textoDestaque">
             Aqui você poderá acompanhar avisos,
             eventos, reuniões e tudo que acontece
             no Grêmio Estudantil.
@@ -149,42 +238,42 @@ h1 {
 
     <section class="menu">
 
-        <button class="botao" onclick="abrir('agenda')">
+        <button class="botao" onclick="abrirAgenda()">
             <span class="icone">📅</span>
             Agenda
         </button>
 
-        <button class="botao" onclick="abrir('avisos')">
+        <button class="botao" onclick="futuro('Avisos')">
             <span class="icone">📢</span>
             Avisos
         </button>
 
-        <button class="botao" onclick="abrir('eventos')">
+        <button class="botao" onclick="futuro('Eventos')">
             <span class="icone">🎉</span>
             Eventos
         </button>
 
-        <button class="botao" onclick="abrir('enquetes')">
+        <button class="botao" onclick="futuro('Enquetes')">
             <span class="icone">🗳️</span>
             Enquetes
         </button>
 
-        <button class="botao" onclick="abrir('sugestoes')">
+        <button class="botao" onclick="futuro('Sugestões')">
             <span class="icone">💡</span>
             Sugestões
         </button>
 
-        <button class="botao" onclick="abrir('gremio')">
+        <button class="botao" onclick="futuro('O Grêmio')">
             <span class="icone">👥</span>
             O Grêmio
         </button>
 
-        <button class="botao" onclick="abrir('calendario')">
+        <button class="botao" onclick="futuro('Calendário')">
             <span class="icone">📚</span>
             Calendário
         </button>
 
-        <button class="botao" onclick="abrir('admin')">
+        <button class="botao" onclick="futuro('Administração')">
             <span class="icone">🔐</span>
             Administração
         </button>
@@ -199,90 +288,316 @@ h1 {
     Juntos pela nossa escola.
 </footer>
 
+</div>
+
+
+
+<!-- ========================= -->
+<!-- AGENDA -->
+<!-- ========================= -->
+
+<div id="telaAgenda" class="tela">
+
+<header class="header">
+
+    <div class="logo">📅</div>
+
+    <h1>Agenda</h1>
+
+    <div class="subtitle">
+        Próximos compromissos do Grêmio
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="topo-tela">
+
+        <button class="voltar" onclick="voltarInicio()">
+            ← Voltar
+        </button>
+
+        <div class="titulo-tela">
+            Eventos
+        </div>
+
+    </div>
+
+
+    <div id="listaAgenda">
+
+        <div class="carregando">
+            🔄 Carregando agenda...
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+
+
 <script>
 
-async function testarSupabase() {
 
-    const destaque = document.querySelector(".destaque");
+/* ========================= */
+/* ABRIR AGENDA */
+/* ========================= */
+
+async function abrirAgenda() {
+
+    document.getElementById("inicio").style.display = "none";
+
+    document.getElementById("telaAgenda").classList.add("ativa");
+
+    await carregarAgenda();
+
+}
+
+
+/* ========================= */
+/* VOLTAR */
+/* ========================= */
+
+function voltarInicio() {
+
+    document.getElementById("telaAgenda").classList.remove("ativa");
+
+    document.getElementById("inicio").style.display = "block";
+
+}
+
+
+/* ========================= */
+/* CARREGAR AGENDA */
+/* ========================= */
+
+async function carregarAgenda() {
+
+    const lista = document.getElementById("listaAgenda");
+
+    lista.innerHTML = `
+        <div class="carregando">
+            🔄 Buscando eventos online...
+        </div>
+    `;
+
 
     try {
 
-        destaque.querySelector("h2").textContent = "🔄 Testando conexão...";
-
-        destaque.querySelector("p").textContent =
-            "Conectando ao banco online...";
-
-        if (typeof supabaseClient === "undefined") {
-
-            throw new Error(
-                "supabaseClient não foi encontrado."
-            );
-
-        }
-
         const { data, error } = await supabaseClient
+
             .from("agenda")
-            .select("*");
+
+            .select("*")
+
+            .order("data", {
+                ascending: true
+            })
+
+            .order("hora", {
+                ascending: true
+            });
+
 
         if (error) {
-            throw error;
-        }
 
-        console.log("DADOS DO SUPABASE:", data);
+            console.error(error);
 
-        if (!data || data.length === 0) {
-
-            destaque.querySelector("h2").textContent =
-                "⚠️ Nenhum evento encontrado";
-
-            destaque.querySelector("p").textContent =
-                "A conexão funcionou, mas a tabela agenda está vazia.";
+            lista.innerHTML = `
+                <div class="sem-eventos">
+                    ❌ Não foi possível carregar a agenda.
+                </div>
+            `;
 
             return;
         }
 
-        const evento = data[0];
 
-        destaque.querySelector("h2").textContent =
-            evento.titulo;
+        if (!data || data.length === 0) {
 
-        destaque.querySelector("p").textContent =
-            evento.data +
-            (evento.hora ? " • " + evento.hora : "") +
-            (evento.local ? " • " + evento.local : "");
+            lista.innerHTML = `
+                <div class="sem-eventos">
+                    📅<br><br>
+                    Nenhum evento cadastrado ainda.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        lista.innerHTML = "";
+
+
+        data.forEach(evento => {
+
+            const dataFormatada = formatarData(evento.data);
+
+            const hora = evento.hora
+                ? "⏰ " + evento.hora.substring(0,5)
+                : "";
+
+            const local = evento.local
+                ? "📍 " + evento.local
+                : "";
+
+            const descricao = evento.descricao
+                ? `<p>📝 ${evento.descricao}</p>`
+                : "";
+
+
+            const card = document.createElement("div");
+
+            card.className = "evento";
+
+
+            card.innerHTML = `
+
+                <div class="evento-data">
+                    📅 ${dataFormatada}
+                    ${hora ? " • " + hora : ""}
+                </div>
+
+                <h3>
+                    ${evento.titulo}
+                </h3>
+
+                ${local ? `<p>${local}</p>` : ""}
+
+                ${descricao}
+
+            `;
+
+
+            lista.appendChild(card);
+
+        });
+
 
     } catch (erro) {
 
-        console.error("ERRO SUPABASE:", erro);
+        console.error(erro);
 
-        destaque.querySelector("h2").textContent =
-            "❌ Erro na conexão";
-
-        destaque.querySelector("p").textContent =
-            erro.message || "Erro desconhecido.";
+        lista.innerHTML = `
+            <div class="sem-eventos">
+                ❌ Erro ao carregar a agenda.
+            </div>
+        `;
 
     }
 
 }
 
 
-function abrir(pagina) {
+/* ========================= */
+/* FORMATAR DATA */
+/* ========================= */
 
-    if (pagina === "agenda") {
+function formatarData(data) {
 
-        testarSupabase();
+    if (!data) return "";
 
-        return;
-    }
+    const partes = data.split("-");
+
+    if (partes.length !== 3) return data;
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+}
+
+
+/* ========================= */
+/* BOTÕES FUTUROS */
+/* ========================= */
+
+function futuro(nome) {
 
     alert(
         "📱 " +
-        pagina.charAt(0).toUpperCase() +
-        pagina.slice(1) +
+        nome +
         "\n\nEsta função será criada nas próximas etapas."
     );
 
 }
+
+
+/* ========================= */
+/* CARREGAR DESTAQUE */
+/* ========================= */
+
+async function carregarDestaque() {
+
+    try {
+
+        const { data, error } = await supabaseClient
+
+            .from("agenda")
+
+            .select("*")
+
+            .order("data", {
+                ascending: true
+            })
+
+            .order("hora", {
+                ascending: true
+            })
+
+            .limit(1);
+
+
+        if (error || !data || data.length === 0) {
+            return;
+        }
+
+
+        const evento = data[0];
+
+
+        document.getElementById("tituloDestaque").textContent =
+            evento.titulo;
+
+
+        let texto = "";
+
+
+        if (evento.data) {
+            texto += "📅 " + formatarData(evento.data);
+        }
+
+
+        if (evento.hora) {
+            texto += " • ⏰ " + evento.hora.substring(0,5);
+        }
+
+
+        if (evento.local) {
+            texto += " • 📍 " + evento.local;
+        }
+
+
+        document.getElementById("textoDestaque").textContent =
+            texto;
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+    }
+
+}
+
+
+/* ========================= */
+/* INICIAR */
+/* ========================= */
+
+carregarDestaque();
 
 </script>
 
