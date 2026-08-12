@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Grêmio Estudantil 🎓</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #10101a;
+    color: white;
+    min-height: 100vh;
+}
+
+.header {
+    padding: 30px 20px 25px;
+    text-align: center;
+    background: linear-gradient(135deg, #17132b, #25164a);
+    border-bottom: 1px solid #493078;
+}
+
+.logo {
+    font-size: 60px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 27px;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: #c8c3d8;
+    font-size: 15px;
+}
+
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.destaque {
+    background: linear-gradient(135deg, #26174a, #382064);
+    border: 1px solid #67459b;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.destaque small {
+    color: #d6b56a;
+    font-weight: bold;
+}
+
+.destaque h2 {
+    margin: 8px 0;
+    font-size: 21px;
+}
+
+.destaque p {
+    margin: 0;
+    color: #d4d0df;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.botao {
+    border: none;
+    border-radius: 17px;
+    padding: 22px 10px;
+    background: #1a1925;
+    color: white;
+    border: 1px solid #302b40;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao:hover {
+    transform: translateY(-2px);
+    background: #252137;
+    border-color: #7651a8;
+}
+
+.icone {
+    display: block;
+    font-size: 31px;
+    margin-bottom: 9px;
+}
+
+.rodape {
+    text-align: center;
+    padding: 30px 15px;
+    color: #777383;
+    font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">🎓</div>
+
+    <h1>Grêmio Estudantil</h1>
+
+    <div class="subtitle">
+        A voz dos estudantes
+    </div>
+
+</header>
+
+<main class="container">
+
+    <section class="destaque">
+
+        <small>📢 DESTAQUE</small>
+
+        <h2>Bem-vindo ao Grêmio!</h2>
+
+        <p>
+            Aqui você poderá acompanhar avisos,
+            eventos, reuniões e tudo que acontece
+            no Grêmio Estudantil.
+        </p>
+
+    </section>
+
+
+    <section class="menu">
+
+        <button class="botao" onclick="abrir('agenda')">
+            <span class="icone">📅</span>
+            Agenda
+        </button>
+
+        <button class="botao" onclick="abrir('avisos')">
+            <span class="icone">📢</span>
+            Avisos
+        </button>
+
+        <button class="botao" onclick="abrir('eventos')">
+            <span class="icone">🎉</span>
+            Eventos
+        </button>
+
+        <button class="botao" onclick="abrir('enquetes')">
+            <span class="icone">🗳️</span>
+            Enquetes
+        </button>
+
+        <button class="botao" onclick="abrir('sugestoes')">
+            <span class="icone">💡</span>
+            Sugestões
+        </button>
+
+        <button class="botao" onclick="abrir('gremio')">
+            <span class="icone">👥</span>
+            O Grêmio
+        </button>
+
+        <button class="botao" onclick="abrir('calendario')">
+            <span class="icone">📚</span>
+            Calendário
+        </button>
+
+        <button class="botao" onclick="abrir('admin')">
+            <span class="icone">🔐</span>
+            Administração
+        </button>
+
+    </section>
+
+</main>
+
+
+<footer class="rodape">
+    Grêmio Estudantil 🎓<br>
+    Juntos pela nossa escola.
+</footer>
+
+
+<script>
+
+function abrir(pagina) {
+
+    alert(
+        "📱 " +
+        pagina.charAt(0).toUpperCase() +
+        pagina.slice(1) +
+        "\n\nEsta função será criada nas próximas etapas."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
