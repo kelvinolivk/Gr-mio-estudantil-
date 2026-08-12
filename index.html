@@ -202,7 +202,56 @@ h1 {
 
 <script>
 
+<script>
+
+async function carregarAgenda() {
+
+    try {
+
+        const { data, error } = await supabaseClient
+            .from("agenda")
+            .select("*")
+            .order("data", { ascending: true })
+            .order("hora", { ascending: true });
+
+        if (error) {
+            console.error("Erro ao carregar agenda:", error);
+            return;
+        }
+
+        console.log("Agenda carregada:", data);
+
+        if (data && data.length > 0) {
+
+            const evento = data[0];
+
+            document.querySelector(".destaque h2").textContent =
+                evento.titulo;
+
+            document.querySelector(".destaque p").textContent =
+                `${evento.data} ${evento.hora ? "• " + evento.hora : ""} ${
+                    evento.local ? "• " + evento.local : ""
+                }`;
+
+        }
+
+    } catch (erro) {
+
+        console.error("Erro:", erro);
+
+    }
+
+}
+
+
 function abrir(pagina) {
+
+    if (pagina === "agenda") {
+
+        alert("📅 A Agenda online está sendo carregada!");
+
+        return;
+    }
 
     alert(
         "📱 " +
@@ -212,6 +261,9 @@ function abrir(pagina) {
     );
 
 }
+
+
+carregarAgenda();
 
 </script>
 
