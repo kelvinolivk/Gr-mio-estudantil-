@@ -566,7 +566,112 @@ Mural
 </main>
 
 </div>
+<!-- ========================= -->
+<!-- PAINEL ADMINISTRATIVO -->
+<!-- ========================= -->
 
+<div id="telaPainelAdmin" class="tela">
+
+<header class="header">
+
+    <div class="logo">🎓</div>
+
+    <h1>Painel do Grêmio</h1>
+
+    <div class="subtitle">
+        Administração
+    </div>
+
+</header>
+
+<main class="container">
+
+    <div class="topo-tela">
+
+        <button class="voltar" onclick="sairAdmin()">
+            ← Sair
+        </button>
+
+        <div class="titulo-tela">
+            Novo evento
+        </div>
+
+    </div>
+
+
+    <div class="destaque">
+
+        <small>📅 AGENDA</small>
+
+        <h2>Cadastrar evento</h2>
+
+        <p>
+            O evento publicado aparecerá automaticamente
+            na Agenda dos alunos.
+        </p>
+
+
+        <input
+            type="text"
+            id="adminTitulo"
+            placeholder="Título do evento"
+            class="campo-admin"
+        >
+
+
+        <textarea
+            id="adminDescricao"
+            placeholder="Descrição do evento"
+            class="campo-admin"
+            rows="4"
+        ></textarea>
+
+
+        <label class="label-admin">
+            Data
+        </label>
+
+        <input
+            type="date"
+            id="adminData"
+            class="campo-admin"
+        >
+
+
+        <label class="label-admin">
+            Horário
+        </label>
+
+        <input
+            type="time"
+            id="adminHora"
+            class="campo-admin"
+        >
+
+
+        <input
+            type="text"
+            id="adminLocal"
+            placeholder="Local"
+            class="campo-admin"
+        >
+
+
+        <button
+            onclick="publicarEvento()"
+            class="botao-publicar"
+        >
+            📅 PUBLICAR EVENTO
+        </button>
+
+
+        <p id="mensagemEvento"></p>
+
+    </div>
+
+</main>
+
+</div>
 <script>
 
 
