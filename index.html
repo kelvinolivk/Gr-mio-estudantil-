@@ -480,7 +480,92 @@ Mural
 
 </div>
 
+<!-- ========================= -->
+<!-- ADMINISTRAÇÃO -->
+<!-- ========================= -->
 
+<div id="telaAdmin" class="tela">
+
+<header class="header">
+
+    <div class="logo">🔐</div>
+
+    <h1>Administração</h1>
+
+    <div class="subtitle">
+        Área exclusiva do Grêmio
+    </div>
+
+</header>
+
+<main class="container">
+
+    <div class="topo-tela">
+
+        <button class="voltar" onclick="voltarInicio()">
+            ← Voltar
+        </button>
+
+        <div class="titulo-tela">
+            Acesso
+        </div>
+
+    </div>
+
+    <div class="destaque">
+
+        <small>🔐 ÁREA RESTRITA</small>
+
+        <h2>Login do Grêmio</h2>
+
+        <p>
+            Digite a senha administrativa para continuar.
+        </p>
+
+        <input
+            type="password"
+            id="senhaAdmin"
+            placeholder="Digite a senha"
+            style="
+                width:100%;
+                padding:15px;
+                margin-top:15px;
+                border-radius:12px;
+                border:1px solid #493d65;
+                background:#10101a;
+                color:white;
+                font-size:16px;
+                outline:none;
+            "
+        >
+
+        <button
+            onclick="entrarAdmin()"
+            style="
+                width:100%;
+                margin-top:12px;
+                padding:15px;
+                border:none;
+                border-radius:12px;
+                background:#7651a8;
+                color:white;
+                font-size:16px;
+                font-weight:bold;
+                cursor:pointer;
+            "
+        >
+            🔓 Entrar
+        </button>
+
+        <p id="mensagemLogin"
+           style="margin-top:15px;">
+        </p>
+
+    </div>
+
+</main>
+
+</div>
 
 <script>
 
