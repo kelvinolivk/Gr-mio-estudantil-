@@ -917,7 +917,133 @@ function formatarData(data) {
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
 }
+/* ========================= */
+/* ADMINISTRAÇÃO */
+/* ========================= */
 
+function abrirAdmin() {
+
+    esconderTelas();
+
+    document.getElementById("telaAdmin")
+        .classList.add("ativa");
+
+    document.getElementById("senhaAdmin").value = "";
+
+    document.getElementById("mensagemLogin").textContent = "";
+
+}
+
+
+async function entrarAdmin() {
+
+    const senha =
+        document.getElementById("senhaAdmin").value.trim();
+
+    const mensagem =
+        document.getElementById("mensagemLogin");
+
+
+    if (!senha) {
+
+        mensagem.textContent =
+            "⚠️ Digite a senha.";
+
+        mensagem.style.color =
+            "#d6b56a";
+
+        return;
+
+    }
+
+
+    mensagem.textContent =
+        "🔄 Verificando...";
+
+    mensagem.style.color =
+        "#c8c3d8";
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+
+            .from("configuracao_admin")
+
+            .select("senha")
+
+            .limit(1);
+
+
+        if (error) {
+
+            console.error(error);
+
+            mensagem.textContent =
+                "❌ Erro ao verificar a senha.";
+
+            mensagem.style.color =
+                "#ff6b6b";
+
+            return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            mensagem.textContent =
+                "❌ Configuração não encontrada.";
+
+            mensagem.style.color =
+                "#ff6b6b";
+
+            return;
+
+        }
+
+
+        if (senha === data[0].senha) {
+
+            mensagem.textContent =
+                "✅ Acesso autorizado!";
+
+            mensagem.style.color =
+                "#7ee787";
+
+
+            setTimeout(() => {
+
+                abrirPainelAdmin();
+
+            }, 500);
+
+
+        } else {
+
+            mensagem.textContent =
+                "❌ Senha incorreta.";
+
+            mensagem.style.color =
+                "#ff6b6b";
+
+        }
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mensagem.textContent =
+            "❌ Erro inesperado.";
+
+        mensagem.style.color =
+            "#ff6b6b";
+
+    }
+
+}
 
 /* ========================= */
 /* FUTUROS */
