@@ -849,59 +849,71 @@ evento.descricao
 : "";
 
 
+let botoesAdmin = "";
+
+if (window.adminLogado === true) {
+
+    botoesAdmin = `
+
+        <div style="
+            display:flex;
+            gap:10px;
+            margin-top:15px;
+        ">
+
+            <button
+                onclick="editarEvento('${evento.id}')"
+                style="
+                    flex:1;
+                    padding:12px;
+                    border:none;
+                    border-radius:10px;
+                    background:#7651a8;
+                    color:white;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                ✏️ Editar
+            </button>
+
+            <button
+                onclick="excluirEvento('${evento.id}')"
+                style="
+                    flex:1;
+                    padding:12px;
+                    border:none;
+                    border-radius:10px;
+                    background:#8b3030;
+                    color:white;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                🗑️ Excluir
+            </button>
+
+        </div>
+
+    `;
+}
+
+
 card.innerHTML = `
 
-<div class="evento-data">
-    📅 ${dataFormatada}${hora}
-</div>
+    <div class="evento-data">
+        📅 ${dataFormatada}${hora}
+    </div>
 
-<h3>
-    ${evento.titulo}
-</h3>
+    <h3>
+        ${evento.titulo}
+    </h3>
 
-${local}
+    ${local}
 
-${descricao}
+    ${descricao}
 
-<div style="
-    display:flex;
-    gap:10px;
-    margin-top:15px;
-">
-
-    <button
-        onclick="editarEvento('${evento.id}')"
-        style="
-            flex:1;
-            padding:12px;
-            border:none;
-            border-radius:10px;
-            background:#7651a8;
-            color:white;
-            font-weight:bold;
-            cursor:pointer;
-        "
-    >
-        ✏️ Editar
-    </button>
-
-    <button
-        onclick="excluirEvento('${evento.id}')"
-        style="
-            flex:1;
-            padding:12px;
-            border:none;
-            border-radius:10px;
-            background:#8b3030;
-            color:white;
-            font-weight:bold;
-            cursor:pointer;
-        "
-    >
-        🗑️ Excluir
-    </button>
-
-</div>
+    ${botoesAdmin}
 
 `;
 
