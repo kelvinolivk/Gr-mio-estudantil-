@@ -1459,3 +1459,516 @@ alert("❌ Erro inesperado.");
 }
 
 }
+/* =========================
+   EXCLUIR EVENTO
+========================= */
+
+async function excluirEvento(id) {
+
+if (window.adminLogado !== true) {
+alert("🔐 Acesso administrativo necessário.");
+return;
+}
+
+const confirmar = confirm(
+"🗑️ Tem certeza que deseja excluir este evento?"
+);
+
+if (!confirmar) return;
+
+try {
+
+const { error } =
+await supabaseClient
+.from("agenda")
+.delete()
+.eq("id", id);
+
+if (error) {
+
+console.error(error);
+
+alert(
+"❌ Não foi possível excluir o evento."
+);
+
+return;
+}
+
+alert(
+"✅ Evento excluído com sucesso!"
+);
+
+await carregarAgenda();
+await carregarDestaque();
+
+} catch (erro) {
+
+console.error(erro);
+
+alert(
+"❌ Erro inesperado ao excluir o evento."
+);
+
+}
+
+}
+
+
+/* =========================
+   PUBLICAR / EDITAR AVISO
+========================= */
+
+async function publicarAviso() {
+
+if (window.adminLogado !== true) {
+
+alert("🔐 Faça login como administrador.");
+
+return;
+
+}
+
+const titulo =
+document.getElementById("avisoTitulo")
+.value
+.trim();
+
+const mensagemTexto =
+document.getElementById("avisoMensagem")
+.value
+.trim();
+
+const mensagem =
+document.getElementById("mensagemAviso");
+
+
+if (!titulo || !mensagemTexto) {
+
+mensagem.textContent =
+"⚠️ Preencha o título e o texto do aviso.";
+
+mensagem.style.color =
+"#d6b56a";
+
+return;
+
+}
+
+
+mensagem.textContent =
+window.avisoEditandoId
+? "🔄 Salvando alterações..."
+: "🔄 Publicando aviso...";
+
+mensagem.style.color =
+"#c8c3d8";
+
+
+try {
+
+let resultado;
+
+
+/* EDITAR AVISO */
+
+if (window.avisoEditandoId) {
+
+resultado =
+await supabaseClient
+.from("avisos")
+.update({
+
+titulo: titulo,
+mensagem: mensagemTexto
+
+})
+.eq("id", window.avisoEditandoId);
+
+
+/* NOVO AVISO */
+
+} else {
+
+resultado =
+await supabaseClient
+.from("avisos")
+.insert([{
+
+titulo: titulo,
+mensagem: mensagemTexto
+
+}]);
+
+}
+
+
+if (resultado.error) {
+
+console.error(resultado.error);
+
+mensagem.textContent =
+"❌ Não foi possível salvar o aviso.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+return;
+
+}
+
+
+mensagem.textContent =
+window.avisoEditandoId
+? "✅ Aviso alterado com sucesso!"
+: "✅ Aviso publicado com sucesso!";
+
+mensagem.style.color =
+"#7ee787";
+
+
+/* LIMPAR */
+
+document.getElementById("avisoTitulo")
+.value = "";
+
+document.getElementById("avisoMensagem")
+.value = "";
+
+
+/* SAIR DO MODO EDIÇÃO */
+
+window.avisoEditandoId = null;
+
+
+document.getElementById(
+"tituloFormularioAviso"
+).textContent =
+"Publicar aviso";
+
+
+document.getElementById(
+"botaoAviso"
+).textContent =
+"📢 PUBLICAR AVISO";
+
+
+/* ATUALIZAR LISTA */
+
+await carregarAvisos();
+
+
+} catch (erro) {
+
+console.error(erro);
+
+mensagem.textContent =
+"❌ Erro inesperado.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+}
+
+}
+
+
+/* =========================
+   EDITAR AVISO
+========================= */
+
+async function editarAviso(id) {
+
+if (window.adminLogado !== true) {
+
+alert("🔐 Acesso administrativo necessário.");
+
+return;
+
+}
+
+try {
+
+const { data, error } =
+await supabaseClient
+.from("avisos")
+.select("*")
+.eq("id", id)
+.single();
+
+
+if (error) {
+
+console.error(error);
+
+alert(
+"❌ Não foi possível carregar o aviso."
+);
+
+return;
+
+}
+
+
+document.getElementById("avisoTitulo")
+.value =
+data.titulo || "";
+
+
+document.getElementById("avisoMensagem")
+.value =
+data.mensagem || "";
+
+
+window.avisoEditandoId = id;
+
+
+document.getElementById(
+"tituloFormularioAviso"
+).textContent =
+"✏️ Editar aviso";
+
+
+document.getElementById(
+"botaoAviso"
+).textContent =
+"💾 SALVAR ALTERAÇÕES";
+
+
+document.getElementById(
+"mensagemAviso"
+).textContent =
+"✏️ Aviso carregado para edição.";
+
+
+document.getElementById(
+"mensagemAviso"
+).style.color =
+"#d6b56a";
+
+
+/* IR PARA O PAINEL */
+
+document.getElementById("telaAvisos")
+.classList.remove("ativa");
+
+
+document.getElementById("telaPainelAdmin")
+.classList.add("ativa");
+
+
+/* ROLAR PARA O AVISO */
+
+setTimeout(() => {
+
+document.getElementById(
+"tituloFormularioAviso"
+).scrollIntoView({
+behavior: "smooth",
+block: "start"
+});
+
+}, 100);
+
+
+} catch (erro) {
+
+console.error(erro);
+
+alert(
+"❌ Erro inesperado."
+);
+
+}
+
+}
+
+
+/* =========================
+   EXCLUIR AVISO
+========================= */
+
+async function excluirAviso(id) {
+
+if (window.adminLogado !== true) {
+
+alert("🔐 Acesso administrativo necessário.");
+
+return;
+
+}
+
+
+const confirmar =
+confirm(
+"🗑️ Tem certeza que deseja excluir este aviso?"
+);
+
+
+if (!confirmar) return;
+
+
+try {
+
+const { error } =
+await supabaseClient
+.from("avisos")
+.delete()
+.eq("id", id);
+
+
+if (error) {
+
+console.error(error);
+
+alert(
+"❌ Não foi possível excluir o aviso."
+);
+
+return;
+
+}
+
+
+alert(
+"✅ Aviso excluído com sucesso!"
+);
+
+
+/* ATUALIZA A LISTA IMEDIATAMENTE */
+
+await carregarAvisos();
+
+
+} catch (erro) {
+
+console.error(erro);
+
+alert(
+"❌ Erro inesperado ao excluir o aviso."
+);
+
+}
+
+}
+
+
+/* =========================
+   DESTAQUE
+========================= */
+
+async function carregarDestaque() {
+
+try {
+
+const { data, error } =
+await supabaseClient
+.from("agenda")
+.select("*")
+.order("data", {
+ascending: true
+})
+.order("hora", {
+ascending: true
+})
+.limit(1);
+
+
+if (
+error ||
+!data ||
+data.length === 0
+) {
+
+return;
+
+}
+
+
+const evento =
+data[0];
+
+
+document.getElementById(
+"tituloDestaque"
+).textContent =
+evento.titulo || "Próximo evento";
+
+
+let texto = "";
+
+
+if (evento.data) {
+
+texto +=
+"📅 " +
+formatarData(evento.data);
+
+}
+
+
+if (evento.hora) {
+
+texto +=
+" • ⏰ " +
+evento.hora.substring(0,5);
+
+}
+
+
+if (evento.local) {
+
+texto +=
+" • 📍 " +
+evento.local;
+
+}
+
+
+document.getElementById(
+"textoDestaque"
+).textContent =
+texto;
+
+} catch (erro) {
+
+console.error(erro);
+
+}
+
+}
+
+
+/* =========================
+   FUTUROS
+========================= */
+
+function futuro(nome) {
+
+alert(
+"📱 " +
+nome +
+"\n\nEsta função será criada nas próximas etapas."
+);
+
+}
+
+
+/* =========================
+   INICIALIZAÇÃO
+========================= */
+
+document.addEventListener(
+"DOMContentLoaded",
+function() {
+
+carregarDestaque();
+
+}
+);
+
+</script>
+
+</body>
+
+</html>
