@@ -1595,6 +1595,71 @@ async function excluirEvento(id) {
 
     }
 
+}/* ========================= */
+/* EDITAR EVENTO */
+/* ========================= */
+
+async function editarEvento(id) {
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("agenda")
+                .select("*")
+                .eq("id", id)
+                .single();
+
+        if (error) {
+
+            console.error(error);
+
+            alert("❌ Não foi possível carregar o evento.");
+
+            return;
+        }
+
+        document.getElementById("adminTitulo").value =
+            data.titulo || "";
+
+        document.getElementById("adminDescricao").value =
+            data.descricao || "";
+
+        document.getElementById("adminData").value =
+            data.data || "";
+
+        document.getElementById("adminHora").value =
+            data.hora ? data.hora.substring(0, 5) : "";
+
+        document.getElementById("adminLocal").value =
+            data.local || "";
+
+        document.getElementById("mensagemEvento").textContent =
+            "✏️ Evento carregado para edição.";
+
+        document.getElementById("mensagemEvento").style.color =
+            "#d6b56a";
+
+        /* Guardar o ID que está sendo editado */
+
+        window.eventoEditandoId = id;
+
+        /* Abrir painel administrativo */
+
+        document.getElementById("telaAgenda")
+            .classList.remove("ativa");
+
+        document.getElementById("telaPainelAdmin")
+            .classList.add("ativa");
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("❌ Erro inesperado.");
+
+    }
+
 }
 </script>
 
