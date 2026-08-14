@@ -2,11 +2,8 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Grêmio Estudantil 🎓</title>
 
@@ -143,6 +140,8 @@ h1 {
     font-weight: bold;
 }
 
+/* EVENTOS */
+
 .evento {
     background: #1a1925;
     border: 1px solid #39324d;
@@ -169,6 +168,8 @@ h1 {
     color: #c8c4d2;
     line-height: 1.5;
 }
+
+/* AVISOS */
 
 .aviso {
     background: #1a1925;
@@ -210,6 +211,8 @@ h1 {
     padding: 30px;
     color: #c8c3d8;
 }
+
+/* ADMIN */
 
 .campo-admin {
     width: 100%;
@@ -253,6 +256,12 @@ h1 {
     background: #8965bd;
 }
 
+.separador {
+    height: 1px;
+    background: #493d65;
+    margin: 30px 0;
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -271,79 +280,82 @@ h1 {
 
 <header class="header">
 
-    <div class="logo">🎓</div>
+<div class="logo">🎓</div>
 
-    <h1>Grêmio Estudantil</h1>
+<h1>Grêmio Estudantil</h1>
 
-    <div class="subtitle">
-        A voz dos estudantes
-    </div>
+<div class="subtitle">
+A voz dos estudantes
+</div>
 
 </header>
+
 
 <main class="container">
 
 <section class="destaque">
 
-    <small>📢 DESTAQUE</small>
+<small>📢 DESTAQUE</small>
 
-    <h2 id="tituloDestaque">
-        Bem-vindo ao Grêmio!
-    </h2>
+<h2 id="tituloDestaque">
+Bem-vindo ao Grêmio!
+</h2>
 
-    <p id="textoDestaque">
-        Aqui você poderá acompanhar avisos,
-        eventos, reuniões e tudo que acontece
-        no Grêmio Estudantil.
-    </p>
+<p id="textoDestaque">
+Aqui você poderá acompanhar avisos,
+eventos, reuniões e tudo que acontece
+no Grêmio Estudantil.
+</p>
 
 </section>
+
 
 <section class="menu">
 
 <button class="botao" onclick="abrirAgenda()">
-    <span class="icone">📅</span>
-    Agenda
+<span class="icone">📅</span>
+Agenda
 </button>
 
 <button class="botao" onclick="abrirAvisos()">
-    <span class="icone">📢</span>
-    Avisos
+<span class="icone">📢</span>
+Avisos
 </button>
 
 <button class="botao" onclick="futuro('Eventos')">
-    <span class="icone">🎉</span>
-    Eventos
+<span class="icone">🎉</span>
+Eventos
 </button>
 
 <button class="botao" onclick="futuro('Enquetes')">
-    <span class="icone">🗳️</span>
-    Enquetes
+<span class="icone">🗳️</span>
+Enquetes
 </button>
 
 <button class="botao" onclick="futuro('Sugestões')">
-    <span class="icone">💡</span>
-    Sugestões
+<span class="icone">💡</span>
+Sugestões
 </button>
 
 <button class="botao" onclick="futuro('O Grêmio')">
-    <span class="icone">👥</span>
-    O Grêmio
+<span class="icone">👥</span>
+O Grêmio
 </button>
 
 <button class="botao" onclick="futuro('Calendário')">
-    <span class="icone">📚</span>
-    Calendário
+<span class="icone">📚</span>
+Calendário
 </button>
 
 <button class="botao" onclick="abrirAdmin()">
-    <span class="icone">🔐</span>
-    Administração
+<span class="icone">🔐</span>
+Administração
 </button>
 
 </section>
 
 </main>
+
 
 <footer class="rodape">
 Grêmio Estudantil 🎓<br>
@@ -444,7 +456,7 @@ Mural
 
 
 <!-- ========================= -->
-<!-- ADMIN -->
+<!-- LOGIN ADMIN -->
 <!-- ========================= -->
 
 <div id="telaAdmin" class="tela">
@@ -475,6 +487,7 @@ Acesso
 
 </div>
 
+
 <div class="destaque">
 
 <small>🔐 ÁREA RESTRITA</small>
@@ -501,6 +514,7 @@ font-size:16px;
 outline:none;
 ">
 
+
 <button
 onclick="entrarAdmin()"
 style="
@@ -520,7 +534,10 @@ cursor:pointer;
 
 </button>
 
-<p id="mensagemLogin"></p>
+
+<p id="mensagemLogin"
+style="margin-top:15px;">
+</p>
 
 </div>
 
@@ -547,6 +564,7 @@ Administração
 
 </header>
 
+
 <main class="container">
 
 <div class="topo-tela">
@@ -556,10 +574,15 @@ Administração
 </button>
 
 <div class="titulo-tela">
-Novo evento
+Painel
 </div>
 
 </div>
+
+
+<!-- ========================= -->
+<!-- NOVO EVENTO -->
+<!-- ========================= -->
 
 <div class="destaque">
 
@@ -572,6 +595,7 @@ O evento publicado aparecerá automaticamente
 na Agenda dos alunos.
 </p>
 
+
 <input
 type="text"
 id="adminTitulo"
@@ -579,12 +603,14 @@ placeholder="Título do evento"
 class="campo-admin"
 >
 
+
 <textarea
 id="adminDescricao"
 placeholder="Descrição do evento"
 class="campo-admin"
 rows="4"
 ></textarea>
+
 
 <label class="label-admin">
 Data
@@ -596,6 +622,7 @@ id="adminData"
 class="campo-admin"
 >
 
+
 <label class="label-admin">
 Horário
 </label>
@@ -606,12 +633,14 @@ id="adminHora"
 class="campo-admin"
 >
 
+
 <input
 type="text"
 id="adminLocal"
 placeholder="Local"
 class="campo-admin"
 >
+
 
 <button
 onclick="publicarEvento()"
@@ -621,7 +650,56 @@ class="botao-publicar">
 
 </button>
 
+
 <p id="mensagemEvento"></p>
+
+</div>
+
+
+<div class="separador"></div>
+
+
+<!-- ========================= -->
+<!-- NOVO AVISO -->
+<!-- ========================= -->
+
+<div class="destaque">
+
+<small>📢 MURAL</small>
+
+<h2>Publicar aviso</h2>
+
+<p>
+O aviso ficará disponível para todos os alunos.
+</p>
+
+
+<input
+type="text"
+id="avisoTitulo"
+placeholder="Título do aviso"
+class="campo-admin"
+>
+
+
+<textarea
+id="avisoMensagem"
+placeholder="Escreva o aviso..."
+class="campo-admin"
+rows="5"
+></textarea>
+
+
+<button
+onclick="publicarAviso()"
+class="botao-publicar">
+
+📢 PUBLICAR AVISO
+
+</button>
+
+
+<p id="mensagemAviso"></p>
 
 </div>
 
@@ -632,34 +710,46 @@ class="botao-publicar">
 
 <script>
 
+
 /* ========================= */
-/* CONTROLE DE TELAS */
+/* TELAS */
 /* ========================= */
 
 function esconderTelas() {
 
-    document.getElementById("inicio").style.display = "none";
+document.getElementById("inicio").style.display = "none";
 
-    document.getElementById("telaAgenda")
-        .classList.remove("ativa");
+document.getElementById("telaAgenda")
+.classList.remove("ativa");
 
-    document.getElementById("telaAvisos")
-        .classList.remove("ativa");
+document.getElementById("telaAvisos")
+.classList.remove("ativa");
 
-    document.getElementById("telaAdmin")
-        .classList.remove("ativa");
+document.getElementById("telaAdmin")
+.classList.remove("ativa");
 
-    document.getElementById("telaPainelAdmin")
-        .classList.remove("ativa");
+document.getElementById("telaPainelAdmin")
+.classList.remove("ativa");
+
 }
 
 
 function voltarInicio() {
 
-    esconderTelas();
+document.getElementById("telaAgenda")
+.classList.remove("ativa");
 
-    document.getElementById("inicio")
-        .style.display = "block";
+document.getElementById("telaAvisos")
+.classList.remove("ativa");
+
+document.getElementById("telaAdmin")
+.classList.remove("ativa");
+
+document.getElementById("telaPainelAdmin")
+.classList.remove("ativa");
+
+document.getElementById("inicio").style.display = "block";
+
 }
 
 
@@ -669,125 +759,129 @@ function voltarInicio() {
 
 async function abrirAgenda() {
 
-    esconderTelas();
+esconderTelas();
 
-    document.getElementById("telaAgenda")
-        .classList.add("ativa");
+document.getElementById("telaAgenda")
+.classList.add("ativa");
 
-    await carregarAgenda();
+await carregarAgenda();
+
 }
 
 
 async function carregarAgenda() {
 
-    const lista =
-        document.getElementById("listaAgenda");
+const lista =
+document.getElementById("listaAgenda");
 
-    lista.innerHTML = `
-        <div class="carregando">
-            🔄 Buscando eventos online...
-        </div>
-    `;
+lista.innerHTML = `
+<div class="carregando">
+🔄 Buscando eventos online...
+</div>
+`;
 
-    try {
+try {
 
-        const resultado =
-            await supabaseClient
-                .from("agenda")
-                .select("*")
-                .order("data", {
-                    ascending: true
-                })
-                .order("hora", {
-                    ascending: true
-                });
+const { data, error } =
+await supabaseClient
+.from("agenda")
+.select("*")
+.order("data", { ascending: true })
+.order("hora", { ascending: true });
 
-        const data = resultado.data;
-        const error = resultado.error;
 
-        if (error) {
+if (error) {
 
-            console.error(error);
+console.error(error);
 
-            lista.innerHTML = `
-                <div class="sem-conteudo">
-                    ❌ Erro ao carregar a agenda.
-                </div>
-            `;
+lista.innerHTML = `
+<div class="sem-conteudo">
+❌ Erro ao carregar a agenda.
+</div>
+`;
 
-            return;
-        }
+return;
 
-        if (!data || data.length === 0) {
+}
 
-            lista.innerHTML = `
-                <div class="sem-conteudo">
-                    📅<br><br>
-                    Nenhum evento cadastrado ainda.
-                </div>
-            `;
 
-            return;
-        }
+if (!data || data.length === 0) {
 
-        lista.innerHTML = "";
+lista.innerHTML = `
+<div class="sem-conteudo">
+📅<br><br>
+Nenhum evento cadastrado ainda.
+</div>
+`;
 
-        data.forEach(evento => {
+return;
 
-            const card =
-                document.createElement("div");
+}
 
-            card.className = "evento";
 
-            const dataFormatada =
-                formatarData(evento.data);
+lista.innerHTML = "";
 
-            const hora =
-                evento.hora
-                ? " • ⏰ " +
-                  evento.hora.substring(0,5)
-                : "";
 
-            const local =
-                evento.local
-                ? `<p>📍 ${evento.local}</p>`
-                : "";
+data.forEach(evento => {
 
-            const descricao =
-                evento.descricao
-                ? `<p>📝 ${evento.descricao}</p>`
-                : "";
+const card =
+document.createElement("div");
 
-            card.innerHTML = `
+card.className = "evento";
 
-                <div class="evento-data">
-                    📅 ${dataFormatada}${hora}
-                </div>
 
-                <h3>
-                    ${evento.titulo || ""}
-                </h3>
+const dataFormatada =
+formatarData(evento.data);
 
-                ${local}
+const hora =
+evento.hora
+? " • ⏰ " + evento.hora.substring(0,5)
+: "";
 
-                ${descricao}
+const local =
+evento.local
+? `<p>📍 ${evento.local}</p>`
+: "";
 
-            `;
+const descricao =
+evento.descricao
+? `<p>📝 ${evento.descricao}</p>`
+: "";
 
-            lista.appendChild(card);
 
-        });
+card.innerHTML = `
 
-    } catch (erro) {
+<div class="evento-data">
+📅 ${dataFormatada}${hora}
+</div>
 
-        console.error(erro);
+<h3>
+${evento.titulo}
+</h3>
 
-        lista.innerHTML = `
-            <div class="sem-conteudo">
-                ❌ Erro ao carregar a agenda.
-            </div>
-        `;
-    }
+${local}
+
+${descricao}
+
+`;
+
+
+lista.appendChild(card);
+
+});
+
+} catch (erro) {
+
+console.error(erro);
+
+lista.innerHTML = `
+<div class="sem-conteudo">
+❌ Erro ao carregar a agenda.
+</div>
+`;
+
+}
+
 }
 
 
@@ -797,109 +891,118 @@ async function carregarAgenda() {
 
 async function abrirAvisos() {
 
-    esconderTelas();
+esconderTelas();
 
-    document.getElementById("telaAvisos")
-        .classList.add("ativa");
+document.getElementById("telaAvisos")
+.classList.add("ativa");
 
-    await carregarAvisos();
+await carregarAvisos();
+
 }
 
 
 async function carregarAvisos() {
 
-    const lista =
-        document.getElementById("listaAvisos");
+const lista =
+document.getElementById("listaAvisos");
 
-    lista.innerHTML = `
-        <div class="carregando">
-            🔄 Buscando avisos online...
-        </div>
-    `;
+lista.innerHTML = `
+<div class="carregando">
+🔄 Buscando avisos online...
+</div>
+`;
 
-    try {
+try {
 
-        const resultado =
-            await supabaseClient
-                .from("avisos")
-                .select("*")
-                .order("created_at", {
-                    ascending: false
-                });
+const { data, error } =
+await supabaseClient
+.from("avisos")
+.select("*")
+.order("created_at", {
+ascending: false
+});
 
-        const data = resultado.data;
-        const error = resultado.error;
 
-        if (error) {
+if (error) {
 
-            console.error(error);
+console.error(error);
 
-            lista.innerHTML = `
-                <div class="sem-conteudo">
-                    ❌ Erro ao carregar os avisos.
-                </div>
-            `;
+lista.innerHTML = `
+<div class="sem-conteudo">
+❌ Erro ao carregar os avisos.
+</div>
+`;
 
-            return;
-        }
+return;
 
-        if (!data || data.length === 0) {
+}
 
-            lista.innerHTML = `
-                <div class="sem-conteudo">
-                    📢<br><br>
-                    Nenhum aviso publicado ainda.
-                </div>
-            `;
 
-            return;
-        }
+if (!data || data.length === 0) {
 
-        lista.innerHTML = "";
+lista.innerHTML = `
+<div class="sem-conteudo">
+📢<br><br>
+Nenhum aviso publicado ainda.
+</div>
+`;
 
-        data.forEach(aviso => {
+return;
 
-            const card =
-                document.createElement("div");
+}
 
-            card.className = "aviso";
 
-            const dataCriacao =
-                aviso.created_at
-                ? new Date(aviso.created_at)
-                    .toLocaleDateString("pt-BR")
-                : "";
+lista.innerHTML = "";
 
-            card.innerHTML = `
 
-                <div class="aviso-data">
-                    📅 Publicado em ${dataCriacao}
-                </div>
+data.forEach(aviso => {
 
-                <h3>
-                    ${aviso.titulo || ""}
-                </h3>
+const card =
+document.createElement("div");
 
-                <p>
-                    ${aviso.mensagem || ""}
-                </p>
+card.className = "aviso";
 
-            `;
 
-            lista.appendChild(card);
+const dataCriacao =
+aviso.created_at
+? new Date(aviso.created_at)
+.toLocaleDateString("pt-BR")
+: "";
 
-        });
 
-    } catch (erro) {
+card.innerHTML = `
 
-        console.error(erro);
+<div class="aviso-data">
+📅 Publicado em ${dataCriacao}
+</div>
 
-        lista.innerHTML = `
-            <div class="sem-conteudo">
-                ❌ Erro ao carregar os avisos.
-            </div>
-        `;
-    }
+<h3>
+${aviso.titulo}
+</h3>
+
+<p>
+${aviso.mensagem}
+</p>
+
+`;
+
+
+lista.appendChild(card);
+
+});
+
+} catch (erro) {
+
+console.error(erro);
+
+lista.innerHTML = `
+<div class="sem-conteudo">
+❌ Erro ao carregar os avisos.
+</div>
+`;
+
+}
+
 }
 
 
@@ -909,18 +1012,16 @@ async function carregarAvisos() {
 
 function formatarData(data) {
 
-    if (!data) {
-        return "";
-    }
+if (!data) return "";
 
-    const partes =
-        data.split("-");
+const partes = data.split("-");
 
-    if (partes.length !== 3) {
-        return data;
-    }
+if (partes.length !== 3) {
+return data;
+}
 
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
 }
 
 
@@ -930,141 +1031,157 @@ function formatarData(data) {
 
 function abrirAdmin() {
 
-    esconderTelas();
+esconderTelas();
 
-    document.getElementById("telaAdmin")
-        .classList.add("ativa");
+document.getElementById("telaAdmin")
+.classList.add("ativa");
 
-    document.getElementById("senhaAdmin")
-        .value = "";
+document.getElementById("senhaAdmin")
+.value = "";
 
-    document.getElementById("mensagemLogin")
-        .textContent = "";
+document.getElementById("mensagemLogin")
+.textContent = "";
+
 }
 
 
 async function entrarAdmin() {
 
-    const senha =
-        document.getElementById("senhaAdmin")
-            .value
-            .trim();
+const senha =
+document.getElementById("senhaAdmin")
+.value.trim();
 
-    const mensagem =
-        document.getElementById("mensagemLogin");
+const mensagem =
+document.getElementById("mensagemLogin");
 
-    if (!senha) {
 
-        mensagem.textContent =
-            "⚠️ Digite a senha.";
+if (!senha) {
 
-        mensagem.style.color =
-            "#d6b56a";
+mensagem.textContent =
+"⚠️ Digite a senha.";
 
-        return;
-    }
+mensagem.style.color =
+"#d6b56a";
 
-    mensagem.textContent =
-        "🔄 Verificando...";
+return;
 
-    mensagem.style.color =
-        "#c8c3d8";
+}
 
-    try {
 
-        const resultado =
-            await supabaseClient
-                .from("configuracao_admin")
-                .select("senha")
-                .limit(1);
+mensagem.textContent =
+"🔄 Verificando...";
 
-        const data = resultado.data;
-        const error = resultado.error;
+mensagem.style.color =
+"#c8c3d8";
 
-        if (error) {
 
-            console.error(error);
+try {
 
-            mensagem.textContent =
-                "❌ Erro ao verificar a senha.";
+const { data, error } =
+await supabaseClient
+.from("configuracao_admin")
+.select("senha")
+.limit(1);
 
-            mensagem.style.color =
-                "#ff6b6b";
 
-            return;
-        }
+if (error) {
 
-        if (!data || data.length === 0) {
+console.error(error);
 
-            mensagem.textContent =
-                "❌ Configuração não encontrada.";
+mensagem.textContent =
+"❌ Erro ao verificar a senha.";
 
-            mensagem.style.color =
-                "#ff6b6b";
+mensagem.style.color =
+"#ff6b6b";
 
-            return;
-        }
+return;
 
-        if (senha === data[0].senha) {
+}
 
-            mensagem.textContent =
-                "✅ Acesso autorizado!";
 
-            mensagem.style.color =
-                "#7ee787";
+if (!data || data.length === 0) {
 
-            setTimeout(function() {
+mensagem.textContent =
+"❌ Configuração não encontrada.";
 
-                abrirPainelAdmin();
+mensagem.style.color =
+"#ff6b6b";
 
-            }, 500);
+return;
 
-        } else {
+}
 
-            mensagem.textContent =
-                "❌ Senha incorreta.";
 
-            mensagem.style.color =
-                "#ff6b6b";
-        }
+if (senha === data[0].senha) {
 
-    } catch (erro) {
+mensagem.textContent =
+"✅ Acesso autorizado!";
 
-        console.error(erro);
+mensagem.style.color =
+"#7ee787";
 
-        mensagem.textContent =
-            "❌ Erro inesperado.";
 
-        mensagem.style.color =
-            "#ff6b6b";
-    }
+setTimeout(() => {
+
+abrirPainelAdmin();
+
+}, 500);
+
+
+} else {
+
+mensagem.textContent =
+"❌ Senha incorreta.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+}
+
+} catch (erro) {
+
+console.error(erro);
+
+mensagem.textContent =
+"❌ Erro inesperado.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+}
+
 }
 
 
 /* ========================= */
-/* PAINEL ADMIN */
+/* PAINEL */
 /* ========================= */
 
 function abrirPainelAdmin() {
 
-    document.getElementById("telaAdmin")
-        .classList.remove("ativa");
+document.getElementById("telaAdmin")
+.classList.remove("ativa");
 
-    document.getElementById("telaPainelAdmin")
-        .classList.add("ativa");
+document.getElementById("telaPainelAdmin")
+.classList.add("ativa");
 
-    document.getElementById("mensagemEvento")
-        .textContent = "";
+document.getElementById("mensagemEvento")
+.textContent = "";
+
+document.getElementById("mensagemAviso")
+.textContent = "";
+
 }
 
 
 function sairAdmin() {
 
-    document.getElementById("telaPainelAdmin")
-        .classList.remove("ativa");
+document.getElementById("telaPainelAdmin")
+.classList.remove("ativa");
 
-    document.getElementById("inicio")
-        .style.display = "block";
+document.getElementById("inicio")
+.style.display = "block";
+
 }
 
 
@@ -1074,132 +1191,220 @@ function sairAdmin() {
 
 async function publicarEvento() {
 
-    const titulo =
-        document.getElementById("adminTitulo")
-            .value
-            .trim();
+const titulo =
+document.getElementById("adminTitulo")
+.value.trim();
 
-    const descricao =
-        document.getElementById("adminDescricao")
-            .value
-            .trim();
+const descricao =
+document.getElementById("adminDescricao")
+.value.trim();
 
-    const data =
-        document.getElementById("adminData")
-            .value;
+const data =
+document.getElementById("adminData")
+.value;
 
-    const hora =
-        document.getElementById("adminHora")
-            .value;
+const hora =
+document.getElementById("adminHora")
+.value;
 
-    const local =
-        document.getElementById("adminLocal")
-            .value
-            .trim();
+const local =
+document.getElementById("adminLocal")
+.value.trim();
 
-    const mensagem =
-        document.getElementById("mensagemEvento");
+const mensagem =
+document.getElementById("mensagemEvento");
 
 
-    if (!titulo || !data) {
+if (!titulo || !data) {
 
-        mensagem.textContent =
-            "⚠️ Preencha o título e a data.";
+mensagem.textContent =
+"⚠️ Preencha pelo menos o título e a data.";
 
-        mensagem.style.color =
-            "#d6b56a";
+mensagem.style.color =
+"#d6b56a";
 
-        return;
-    }
+return;
 
-
-    mensagem.textContent =
-        "🔄 Publicando evento...";
-
-    mensagem.style.color =
-        "#c8c3d8";
+}
 
 
-    try {
+mensagem.textContent =
+"🔄 Publicando evento...";
 
-        const resultado =
-            await supabaseClient
-                .from("agenda")
-                .insert([
-                    {
-                        titulo: titulo,
-                        descricao: descricao,
-                        data: data,
-                        hora: hora || null,
-                        local: local
-                    }
-                ]);
-
-        const error =
-            resultado.error;
+mensagem.style.color =
+"#c8c3d8";
 
 
-        if (error) {
+try {
 
-            console.error(error);
+const { error } =
+await supabaseClient
+.from("agenda")
+.insert([{
 
-            mensagem.textContent =
-                "❌ Não foi possível publicar o evento.";
+titulo: titulo,
+descricao: descricao,
+data: data,
+hora: hora || null,
+local: local
 
-            mensagem.style.color =
-                "#ff6b6b";
-
-            return;
-        }
-
-
-        mensagem.textContent =
-            "✅ Evento publicado com sucesso!";
-
-        mensagem.style.color =
-            "#7ee787";
+}]);
 
 
-        document.getElementById("adminTitulo")
-            .value = "";
+if (error) {
 
-        document.getElementById("adminDescricao")
-            .value = "";
+console.error(error);
 
-        document.getElementById("adminData")
-            .value = "";
+mensagem.textContent =
+"❌ Não foi possível publicar o evento.";
 
-        document.getElementById("adminHora")
-            .value = "";
+mensagem.style.color =
+"#ff6b6b";
 
-        document.getElementById("adminLocal")
-            .value = "";
+return;
+
+}
 
 
-    } catch (erro) {
+mensagem.textContent =
+"✅ Evento publicado com sucesso!";
 
-        console.error(erro);
+mensagem.style.color =
+"#7ee787";
 
-        mensagem.textContent =
-            "❌ Erro inesperado.";
 
-        mensagem.style.color =
-            "#ff6b6b";
-    }
+document.getElementById("adminTitulo").value = "";
+document.getElementById("adminDescricao").value = "";
+document.getElementById("adminData").value = "";
+document.getElementById("adminHora").value = "";
+document.getElementById("adminLocal").value = "";
+
+
+carregarDestaque();
+
+
+} catch (erro) {
+
+console.error(erro);
+
+mensagem.textContent =
+"❌ Erro inesperado.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+}
+
 }
 
 
 /* ========================= */
-/* BOTÕES FUTUROS */
+/* PUBLICAR AVISO */
+/* ========================= */
+
+async function publicarAviso() {
+
+const titulo =
+document.getElementById("avisoTitulo")
+.value.trim();
+
+const mensagemTexto =
+document.getElementById("avisoMensagem")
+.value.trim();
+
+const mensagem =
+document.getElementById("mensagemAviso");
+
+
+if (!titulo || !mensagemTexto) {
+
+mensagem.textContent =
+"⚠️ Preencha o título e o texto do aviso.";
+
+mensagem.style.color =
+"#d6b56a";
+
+return;
+
+}
+
+
+mensagem.textContent =
+"🔄 Publicando aviso...";
+
+mensagem.style.color =
+"#c8c3d8";
+
+
+try {
+
+const { error } =
+await supabaseClient
+.from("avisos")
+.insert([{
+
+titulo: titulo,
+mensagem: mensagemTexto
+
+}]);
+
+
+if (error) {
+
+console.error(error);
+
+mensagem.textContent =
+"❌ Não foi possível publicar o aviso.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+return;
+
+}
+
+
+mensagem.textContent =
+"✅ Aviso publicado com sucesso!";
+
+mensagem.style.color =
+"#7ee787";
+
+
+document.getElementById("avisoTitulo")
+.value = "";
+
+document.getElementById("avisoMensagem")
+.value = "";
+
+
+} catch (erro) {
+
+console.error(erro);
+
+mensagem.textContent =
+"❌ Erro inesperado.";
+
+mensagem.style.color =
+"#ff6b6b";
+
+}
+
+}
+
+
+/* ========================= */
+/* FUTUROS */
 /* ========================= */
 
 function futuro(nome) {
 
-    alert(
-        "📱 " +
-        nome +
-        "\n\nEsta função será criada nas próximas etapas."
-    );
+alert(
+"📱 " +
+nome +
+"\n\nEsta função será criada nas próximas etapas."
+);
+
 }
 
 
@@ -1209,76 +1414,82 @@ function futuro(nome) {
 
 async function carregarDestaque() {
 
-    try {
+try {
 
-        const resultado =
-            await supabaseClient
-                .from("agenda")
-                .select("*")
-                .order("data", {
-                    ascending: true
-                })
-                .order("hora", {
-                    ascending: true
-                })
-                .limit(1);
-
-        const data = resultado.data;
-        const error = resultado.error;
-
-        if (
-            error ||
-            !data ||
-            data.length === 0
-        ) {
-            return;
-        }
-
-        const evento =
-            data[0];
-
-        document.getElementById(
-            "tituloDestaque"
-        ).textContent =
-            evento.titulo || "Próximo evento";
+const { data, error } =
+await supabaseClient
+.from("agenda")
+.select("*")
+.order("data", {
+ascending: true
+})
+.order("hora", {
+ascending: true
+})
+.limit(1);
 
 
-        let texto = "";
+if (error ||
+!data ||
+data.length === 0) {
+
+return;
+
+}
 
 
-        if (evento.data) {
-
-            texto +=
-                "📅 " +
-                formatarData(evento.data);
-        }
+const evento =
+data[0];
 
 
-        if (evento.hora) {
-
-            texto +=
-                " • ⏰ " +
-                evento.hora.substring(0,5);
-        }
+document.getElementById(
+"tituloDestaque"
+).textContent =
+evento.titulo;
 
 
-        if (evento.local) {
-
-            texto +=
-                " • 📍 " +
-                evento.local;
-        }
+let texto = "";
 
 
-        document.getElementById(
-            "textoDestaque"
-        ).textContent =
-            texto;
+if (evento.data) {
 
-    } catch (erro) {
+texto +=
+"📅 " +
+formatarData(evento.data);
 
-        console.error(erro);
-    }
+}
+
+
+if (evento.hora) {
+
+texto +=
+" • ⏰ " +
+evento.hora.substring(0,5);
+
+}
+
+
+if (evento.local) {
+
+texto +=
+" • 📍 " +
+evento.local;
+
+}
+
+
+document.getElementById(
+"textoDestaque"
+).textContent =
+texto;
+
+
+} catch (erro) {
+
+console.error(erro);
+
+}
+
 }
 
 
@@ -1286,10 +1497,16 @@ async function carregarDestaque() {
 /* INICIAR */
 /* ========================= */
 
+document.addEventListener(
+"DOMContentLoaded",
+function() {
+
 carregarDestaque();
+
+}
+);
 
 </script>
 
 </body>
-
 </html>
