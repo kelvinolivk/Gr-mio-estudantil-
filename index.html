@@ -4,7 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Grêmio Estudantil 🎓</title>
 
@@ -20,6 +22,16 @@ body {
     background: #10101a;
     color: white;
     min-height: 100vh;
+}
+
+button,
+input,
+textarea {
+    font-family: Arial, sans-serif;
+}
+
+button {
+    cursor: pointer;
 }
 
 .header {
@@ -73,6 +85,7 @@ h1 {
 .destaque p {
     margin: 0;
     color: #d4d0df;
+    line-height: 1.5;
 }
 
 .menu {
@@ -90,7 +103,6 @@ h1 {
     border: 1px solid #302b40;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .botao:hover {
@@ -133,7 +145,6 @@ h1 {
     border-radius: 12px;
     padding: 10px 14px;
     font-size: 15px;
-    cursor: pointer;
 }
 
 .titulo-tela {
@@ -168,6 +179,39 @@ h1 {
     margin: 6px 0;
     color: #c8c4d2;
     line-height: 1.5;
+}
+
+.botoes-evento {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.botao-editar,
+.botao-excluir {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.botao-editar {
+    background: #7651a8;
+}
+
+.botao-editar:hover {
+    background: #8965bd;
+}
+
+.botao-excluir {
+    background: #8b3030;
+}
+
+.botao-excluir:hover {
+    background: #a43b3b;
 }
 
 /* AVISOS */
@@ -225,7 +269,6 @@ h1 {
     color: white;
     font-size: 16px;
     outline: none;
-    font-family: Arial, sans-serif;
 }
 
 .campo-admin:focus {
@@ -250,33 +293,27 @@ h1 {
     color: white;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .botao-publicar:hover {
     background: #8965bd;
 }
 
-.botao-editar {
-    flex: 1;
-    padding: 12px;
+.botao-gerenciar {
+    width: 100%;
+    margin-top: 15px;
+    padding: 16px;
     border: none;
-    border-radius: 10px;
-    background: #7651a8;
+    border-radius: 13px;
+    background: #302354;
+    border: 1px solid #7651a8;
     color: white;
+    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
-.botao-excluir {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #8b3030;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.botao-gerenciar:hover {
+    background: #3d2d68;
 }
 
 .separador {
@@ -285,43 +322,52 @@ h1 {
     margin: 30px 0;
 }
 
-.mensagem-sucesso {
-    color: #7ee787;
+.mensagem {
+    min-height: 20px;
+    margin-top: 15px;
 }
 
-.mensagem-erro {
-    color: #ff6b6b;
+.lista-admin {
+    margin-top: 20px;
 }
 
-.mensagem-aviso {
-    color: #d6b56a;
+.info-admin {
+    background: #181720;
+    border: 1px solid #39324d;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 12px;
+    color: #c8c3d8;
+    font-size: 14px;
 }
 
 </style>
 
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="supabase.js"></script>
 
 </head>
 
 <body>
 
-
-<!-- ========================= -->
+<!-- ================================================== -->
 <!-- INÍCIO -->
-<!-- ========================= -->
+<!-- ================================================== -->
 
 <div id="inicio">
 
 <header class="header">
 
-<div class="logo">🎓</div>
+    <div class="logo">🎓</div>
 
-<h1>Grêmio Estudantil</h1>
+    <h1>Grêmio Estudantil</h1>
 
-<div class="subtitle">
-A voz dos estudantes
-</div>
+    <div class="subtitle">
+        A voz dos estudantes
+    </div>
 
 </header>
 
@@ -329,60 +375,84 @@ A voz dos estudantes
 
 <section class="destaque">
 
-<small>📢 DESTAQUE</small>
+    <small>📢 DESTAQUE</small>
 
-<h2 id="tituloDestaque">
-Bem-vindo ao Grêmio!
-</h2>
+    <h2 id="tituloDestaque">
+        Bem-vindo ao Grêmio!
+    </h2>
 
-<p id="textoDestaque">
-Aqui você poderá acompanhar avisos,
-eventos, reuniões e tudo que acontece
-no Grêmio Estudantil.
-</p>
+    <p id="textoDestaque">
+        Aqui você poderá acompanhar avisos,
+        eventos, reuniões e tudo que acontece
+        no Grêmio Estudantil.
+    </p>
 
 </section>
 
 <section class="menu">
 
-<button class="botao" onclick="abrirAgenda()">
+<button class="botao"
+onclick="abrirAgenda()">
+
 <span class="icone">📅</span>
 Agenda
+
 </button>
 
-<button class="botao" onclick="abrirAvisos()">
+<button class="botao"
+onclick="abrirAvisos()">
+
 <span class="icone">📢</span>
 Avisos
+
 </button>
 
-<button class="botao" onclick="futuro('Eventos')">
+<button class="botao"
+onclick="futuro('Eventos')">
+
 <span class="icone">🎉</span>
 Eventos
+
 </button>
 
-<button class="botao" onclick="futuro('Enquetes')">
+<button class="botao"
+onclick="futuro('Enquetes')">
+
 <span class="icone">🗳️</span>
 Enquetes
+
 </button>
 
-<button class="botao" onclick="futuro('Sugestões')">
+<button class="botao"
+onclick="futuro('Sugestões')">
+
 <span class="icone">💡</span>
 Sugestões
+
 </button>
 
-<button class="botao" onclick="futuro('O Grêmio')">
+<button class="botao"
+onclick="futuro('O Grêmio')">
+
 <span class="icone">👥</span>
 O Grêmio
+
 </button>
 
-<button class="botao" onclick="futuro('Calendário')">
+<button class="botao"
+onclick="futuro('Calendário')">
+
 <span class="icone">📚</span>
 Calendário
+
 </button>
 
-<button class="botao" onclick="abrirAdmin()">
+<button class="botao"
+onclick="abrirAdmin()">
+
 <span class="icone">🔐</span>
 Administração
+
 </button>
 
 </section>
@@ -390,16 +460,18 @@ Administração
 </main>
 
 <footer class="rodape">
+
 Grêmio Estudantil 🎓<br>
 Juntos pela nossa escola.
+
 </footer>
 
 </div>
 
 
-<!-- ========================= -->
+<!-- ================================================== -->
 <!-- AGENDA -->
-<!-- ========================= -->
+<!-- ================================================== -->
 
 <div id="telaAgenda" class="tela">
 
@@ -419,8 +491,11 @@ Próximos compromissos do Grêmio
 
 <div class="topo-tela">
 
-<button class="voltar" onclick="voltarInicio()">
+<button class="voltar"
+onclick="voltarInicio()">
+
 ← Voltar
+
 </button>
 
 <div class="titulo-tela">
@@ -442,9 +517,9 @@ Eventos
 </div>
 
 
-<!-- ========================= -->
+<!-- ================================================== -->
 <!-- AVISOS -->
-<!-- ========================= -->
+<!-- ================================================== -->
 
 <div id="telaAvisos" class="tela">
 
@@ -464,8 +539,11 @@ Mural oficial do Grêmio
 
 <div class="topo-tela">
 
-<button class="voltar" onclick="voltarInicio()">
+<button class="voltar"
+onclick="voltarInicio()">
+
 ← Voltar
+
 </button>
 
 <div class="titulo-tela">
@@ -487,9 +565,9 @@ Mural
 </div>
 
 
-<!-- ========================= -->
+<!-- ================================================== -->
 <!-- LOGIN ADMIN -->
-<!-- ========================= -->
+<!-- ================================================== -->
 
 <div id="telaAdmin" class="tela">
 
@@ -509,8 +587,11 @@ Mural
 
 <div class="topo-tela">
 
-<button class="voltar" onclick="voltarInicio()">
+<button class="voltar"
+onclick="voltarInicio()">
+
 ← Voltar
+
 </button>
 
 <div class="titulo-tela">
@@ -533,38 +614,20 @@ Digite a senha administrativa para continuar.
 type="password"
 id="senhaAdmin"
 placeholder="Digite a senha"
-style="
-width:100%;
-padding:15px;
-margin-top:15px;
-border-radius:12px;
-border:1px solid #493d65;
-background:#10101a;
-color:white;
-font-size:16px;
-outline:none;
-">
+class="campo-admin"
+>
 
 <button
 onclick="entrarAdmin()"
-style="
-width:100%;
-margin-top:12px;
-padding:15px;
-border:none;
-border-radius:12px;
-background:#7651a8;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-">
+class="botao-publicar">
 
-🔓 Entrar
+🔓 ENTRAR
 
 </button>
 
-<p id="mensagemLogin" style="margin-top:15px;"></p>
+<p id="mensagemLogin"
+class="mensagem">
+</p>
 
 </div>
 
@@ -573,9 +636,9 @@ cursor:pointer;
 </div>
 
 
-<!-- ========================= -->
+<!-- ================================================== -->
 <!-- PAINEL ADMIN -->
-<!-- ========================= -->
+<!-- ================================================== -->
 
 <div id="telaPainelAdmin" class="tela">
 
@@ -595,8 +658,11 @@ Administração
 
 <div class="topo-tela">
 
-<button class="voltar" onclick="sairAdmin()">
+<button class="voltar"
+onclick="sairAdmin()">
+
 ← Sair
+
 </button>
 
 <div class="titulo-tela">
@@ -606,7 +672,40 @@ Painel
 </div>
 
 
+<!-- GERENCIAMENTO -->
+
+<div class="destaque">
+
+<small>⚙️ ADMINISTRAÇÃO</small>
+
+<h2>Gerenciar conteúdo</h2>
+
+<p>
+Use as opções abaixo para administrar o aplicativo.
+</p>
+
+<button
+class="botao-gerenciar"
+onclick="abrirAgendaAdmin()">
+
+📅 GERENCIAR AGENDA
+
+</button>
+
+<button
+class="botao-gerenciar"
+onclick="abrirAvisosAdmin()">
+
+📢 GERENCIAR AVISOS
+
+</button>
+
+</div>
+
+
+<!-- ================================================== -->
 <!-- NOVO EVENTO -->
+<!-- ================================================== -->
 
 <div class="destaque">
 
@@ -664,14 +763,26 @@ class="campo-admin"
 
 <button
 onclick="publicarEvento()"
-id="botaoSalvarEvento"
-class="botao-publicar">
+class="botao-publicar"
+id="botaoSalvarEvento">
 
 📅 PUBLICAR EVENTO
 
 </button>
 
-<p id="mensagemEvento"></p>
+<button
+onclick="cancelarEdicao()"
+class="botao-gerenciar"
+id="botaoCancelarEdicao"
+style="display:none;">
+
+❌ CANCELAR EDIÇÃO
+
+</button>
+
+<p id="mensagemEvento"
+class="mensagem">
+</p>
 
 </div>
 
@@ -679,7 +790,9 @@ class="botao-publicar">
 <div class="separador"></div>
 
 
+<!-- ================================================== -->
 <!-- NOVO AVISO -->
+<!-- ================================================== -->
 
 <div class="destaque">
 
@@ -713,7 +826,9 @@ class="botao-publicar">
 
 </button>
 
-<p id="mensagemAviso"></p>
+<p id="mensagemAviso"
+class="mensagem">
+</p>
 
 </div>
 
@@ -724,21 +839,47 @@ class="botao-publicar">
 
 <script>
 
-/* ========================= */
-/* ESTADO DO ADMIN */
-/* ========================= */
+/* ================================================== */
+/* VARIÁVEIS GLOBAIS */
+/* ================================================== */
 
 window.adminLogado = false;
+
 window.eventoEditandoId = null;
 
 
-/* ========================= */
-/* TELAS */
-/* ========================= */
+/* ================================================== */
+/* VERIFICAR SUPABASE */
+/* ================================================== */
+
+function verificarSupabase() {
+
+    if (!window.supabaseClient) {
+
+        console.error(
+            "supabaseClient não encontrado."
+        );
+
+        alert(
+            "❌ Erro: o Supabase não foi carregado.\n\n" +
+            "Verifique se o arquivo supabase.js está no mesmo local do index.html."
+        );
+
+        return false;
+    }
+
+    return true;
+}
+
+
+/* ================================================== */
+/* CONTROLE DE TELAS */
+/* ================================================== */
 
 function esconderTelas() {
 
-    document.getElementById("inicio").style.display = "none";
+    document.getElementById("inicio")
+        .style.display = "none";
 
     document.getElementById("telaAgenda")
         .classList.remove("ativa");
@@ -770,14 +911,36 @@ function voltarInicio() {
 
     document.getElementById("inicio")
         .style.display = "block";
+
+    carregarDestaque();
 }
 
 
-/* ========================= */
+/* ================================================== */
 /* AGENDA */
-/* ========================= */
+/* ================================================== */
 
 async function abrirAgenda() {
+
+    esconderTelas();
+
+    document.getElementById("telaAgenda")
+        .classList.add("ativa");
+
+    await carregarAgenda();
+}
+
+
+async function abrirAgendaAdmin() {
+
+    if (!window.adminLogado) {
+
+        alert("🔐 Faça login como administrador.");
+
+        abrirAdmin();
+
+        return;
+    }
 
     esconderTelas();
 
@@ -799,6 +962,8 @@ async function carregarAgenda() {
         </div>
     `;
 
+    if (!verificarSupabase()) return;
+
     try {
 
         const { data, error } =
@@ -812,26 +977,30 @@ async function carregarAgenda() {
                     ascending: true
                 });
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro Agenda:",
+                error
+            );
 
             lista.innerHTML = `
                 <div class="sem-conteudo">
                     ❌ Erro ao carregar a agenda.
+                    <br><br>
+                    ${error.message || ""}
                 </div>
             `;
 
             return;
         }
 
-
         if (!data || data.length === 0) {
 
             lista.innerHTML = `
                 <div class="sem-conteudo">
-                    📅<br><br>
+                    📅
+                    <br><br>
                     Nenhum evento cadastrado ainda.
                 </div>
             `;
@@ -839,9 +1008,7 @@ async function carregarAgenda() {
             return;
         }
 
-
         lista.innerHTML = "";
-
 
         data.forEach(evento => {
 
@@ -850,49 +1017,32 @@ async function carregarAgenda() {
 
             card.className = "evento";
 
-
             const dataFormatada =
                 formatarData(evento.data);
 
-
             const hora =
                 evento.hora
-                    ? " • ⏰ " +
-                      evento.hora.substring(0, 5)
-                    : "";
-
+                ? " • ⏰ " +
+                  String(evento.hora).substring(0,5)
+                : "";
 
             const local =
                 evento.local
-                    ? `<p>📍 ${escaparHTML(evento.local)}</p>`
-                    : "";
-
+                ? `<p>📍 ${escaparHTML(evento.local)}</p>`
+                : "";
 
             const descricao =
                 evento.descricao
-                    ? `<p>📝 ${escaparHTML(evento.descricao)}</p>`
-                    : "";
-
-
-            /*
-             * BOTÕES ADMIN
-             *
-             * Eles só são criados quando
-             * o administrador está logado.
-             */
+                ? `<p>📝 ${escaparHTML(evento.descricao)}</p>`
+                : "";
 
             let botoesAdmin = "";
-
 
             if (window.adminLogado === true) {
 
                 botoesAdmin = `
 
-                    <div style="
-                        display:flex;
-                        gap:10px;
-                        margin-top:15px;
-                    ">
+                    <div class="botoes-evento">
 
                         <button
                             class="botao-editar"
@@ -913,7 +1063,6 @@ async function carregarAgenda() {
                 `;
             }
 
-
             card.innerHTML = `
 
                 <div class="evento-data">
@@ -921,7 +1070,7 @@ async function carregarAgenda() {
                 </div>
 
                 <h3>
-                    ${escaparHTML(evento.titulo)}
+                    ${escaparHTML(evento.titulo || "")}
                 </h3>
 
                 ${local}
@@ -932,15 +1081,16 @@ async function carregarAgenda() {
 
             `;
 
-
             lista.appendChild(card);
 
         });
 
-
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro inesperado Agenda:",
+            erro
+        );
 
         lista.innerHTML = `
             <div class="sem-conteudo">
@@ -951,11 +1101,31 @@ async function carregarAgenda() {
 }
 
 
-/* ========================= */
+/* ================================================== */
 /* AVISOS */
-/* ========================= */
+/* ================================================== */
 
 async function abrirAvisos() {
+
+    esconderTelas();
+
+    document.getElementById("telaAvisos")
+        .classList.add("ativa");
+
+    await carregarAvisos();
+}
+
+
+async function abrirAvisosAdmin() {
+
+    if (!window.adminLogado) {
+
+        alert("🔐 Faça login como administrador.");
+
+        abrirAdmin();
+
+        return;
+    }
 
     esconderTelas();
 
@@ -977,6 +1147,7 @@ async function carregarAvisos() {
         </div>
     `;
 
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -988,26 +1159,30 @@ async function carregarAvisos() {
                     ascending: false
                 });
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro Avisos:",
+                error
+            );
 
             lista.innerHTML = `
                 <div class="sem-conteudo">
                     ❌ Erro ao carregar os avisos.
+                    <br><br>
+                    ${error.message || ""}
                 </div>
             `;
 
             return;
         }
 
-
         if (!data || data.length === 0) {
 
             lista.innerHTML = `
                 <div class="sem-conteudo">
-                    📢<br><br>
+                    📢
+                    <br><br>
                     Nenhum aviso publicado ainda.
                 </div>
             `;
@@ -1015,9 +1190,7 @@ async function carregarAvisos() {
             return;
         }
 
-
         lista.innerHTML = "";
-
 
         data.forEach(aviso => {
 
@@ -1026,13 +1199,14 @@ async function carregarAvisos() {
 
             card.className = "aviso";
 
-
             const dataCriacao =
                 aviso.created_at
-                    ? new Date(aviso.created_at)
-                        .toLocaleDateString("pt-BR")
-                    : "";
-
+                ? new Date(
+                    aviso.created_at
+                  ).toLocaleDateString(
+                    "pt-BR"
+                  )
+                : "";
 
             card.innerHTML = `
 
@@ -1041,24 +1215,25 @@ async function carregarAvisos() {
                 </div>
 
                 <h3>
-                    ${escaparHTML(aviso.titulo)}
+                    ${escaparHTML(aviso.titulo || "")}
                 </h3>
 
                 <p>
-                    ${escaparHTML(aviso.mensagem)}
+                    ${escaparHTML(aviso.mensagem || "")}
                 </p>
 
             `;
-
 
             lista.appendChild(card);
 
         });
 
-
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro inesperado Avisos:",
+            erro
+        );
 
         lista.innerHTML = `
             <div class="sem-conteudo">
@@ -1069,47 +1244,9 @@ async function carregarAvisos() {
 }
 
 
-/* ========================= */
-/* DATA */
-/* ========================= */
-
-function formatarData(data) {
-
-    if (!data) return "";
-
-    const partes =
-        data.split("-");
-
-    if (partes.length !== 3) {
-        return data;
-    }
-
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
-
-
-/* ========================= */
-/* PROTEÇÃO HTML */
-/* ========================= */
-
-function escaparHTML(texto) {
-
-    if (texto === null || texto === undefined) {
-        return "";
-    }
-
-    return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* ========================= */
-/* ADMIN */
-/* ========================= */
+/* ================================================== */
+/* LOGIN ADMIN */
+/* ================================================== */
 
 function abrirAdmin() {
 
@@ -1133,10 +1270,8 @@ async function entrarAdmin() {
             .value
             .trim();
 
-
     const mensagem =
         document.getElementById("mensagemLogin");
-
 
     if (!senha) {
 
@@ -1149,13 +1284,13 @@ async function entrarAdmin() {
         return;
     }
 
-
     mensagem.textContent =
         "🔄 Verificando...";
 
     mensagem.style.color =
         "#c8c3d8";
 
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -1165,10 +1300,12 @@ async function entrarAdmin() {
                 .select("senha")
                 .limit(1);
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro Login:",
+                error
+            );
 
             mensagem.textContent =
                 "❌ Erro ao verificar a senha.";
@@ -1178,7 +1315,6 @@ async function entrarAdmin() {
 
             return;
         }
-
 
         if (!data || data.length === 0) {
 
@@ -1191,8 +1327,10 @@ async function entrarAdmin() {
             return;
         }
 
-
-        if (senha === data[0].senha) {
+        if (
+            senha ===
+            String(data[0].senha)
+        ) {
 
             window.adminLogado = true;
 
@@ -1202,17 +1340,13 @@ async function entrarAdmin() {
             mensagem.style.color =
                 "#7ee787";
 
-
             setTimeout(() => {
 
                 abrirPainelAdmin();
 
-            }, 500);
-
+            }, 400);
 
         } else {
-
-            window.adminLogado = false;
 
             mensagem.textContent =
                 "❌ Senha incorreta.";
@@ -1221,10 +1355,12 @@ async function entrarAdmin() {
                 "#ff6b6b";
         }
 
-
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro Login:",
+            erro
+        );
 
         mensagem.textContent =
             "❌ Erro inesperado.";
@@ -1235,14 +1371,20 @@ async function entrarAdmin() {
 }
 
 
-/* ========================= */
+/* ================================================== */
 /* PAINEL ADMIN */
-/* ========================= */
+/* ================================================== */
 
 function abrirPainelAdmin() {
 
-    document.getElementById("telaAdmin")
-        .classList.remove("ativa");
+    if (!window.adminLogado) {
+
+        abrirAdmin();
+
+        return;
+    }
+
+    esconderTelas();
 
     document.getElementById("telaPainelAdmin")
         .classList.add("ativa");
@@ -1259,103 +1401,56 @@ function sairAdmin() {
 
     window.adminLogado = false;
 
-    window.eventoEditandoId = null;
+    cancelarEdicao();
 
-    limparFormularioEvento();
-
-    document.getElementById("telaPainelAdmin")
-        .classList.remove("ativa");
+    esconderTelas();
 
     document.getElementById("inicio")
         .style.display = "block";
+
 }
 
 
-/* ========================= */
-/* LIMPAR FORMULÁRIO */
-/* ========================= */
-
-function limparFormularioEvento() {
-
-    document.getElementById("adminTitulo")
-        .value = "";
-
-    document.getElementById("adminDescricao")
-        .value = "";
-
-    document.getElementById("adminData")
-        .value = "";
-
-    document.getElementById("adminHora")
-        .value = "";
-
-    document.getElementById("adminLocal")
-        .value = "";
-
-
-    document.getElementById("tituloFormularioEvento")
-        .textContent = "Cadastrar evento";
-
-
-    document.getElementById("descricaoFormularioEvento")
-        .textContent =
-        "O evento publicado aparecerá automaticamente na Agenda dos alunos.";
-
-
-    document.getElementById("botaoSalvarEvento")
-        .textContent = "📅 PUBLICAR EVENTO";
-
-
-    document.getElementById("mensagemEvento")
-        .textContent = "";
-}
-
-
-/* ========================= */
+/* ================================================== */
 /* PUBLICAR / EDITAR EVENTO */
-/* ========================= */
+/* ================================================== */
 
 async function publicarEvento() {
 
     if (!window.adminLogado) {
 
-        alert("🔐 Acesso administrativo necessário.");
+        alert("🔐 Sessão administrativa não encontrada.");
+
+        abrirAdmin();
 
         return;
     }
-
 
     const titulo =
         document.getElementById("adminTitulo")
             .value
             .trim();
 
-
     const descricao =
         document.getElementById("adminDescricao")
             .value
             .trim();
 
-
     const data =
         document.getElementById("adminData")
             .value;
 
-
     const hora =
         document.getElementById("adminHora")
             .value;
-
 
     const local =
         document.getElementById("adminLocal")
             .value
             .trim();
 
-
     const mensagem =
         document.getElementById("mensagemEvento");
-
 
     if (!titulo || !data) {
 
@@ -1368,39 +1463,46 @@ async function publicarEvento() {
         return;
     }
 
-
-    const estaEditando =
-        !!window.eventoEditandoId;
-
-
     mensagem.textContent =
-        estaEditando
-            ? "🔄 Salvando alterações..."
-            : "🔄 Publicando evento...";
+        window.eventoEditandoId
+        ? "🔄 Salvando alterações..."
+        : "🔄 Publicando evento...";
 
     mensagem.style.color =
         "#c8c3d8";
 
+    if (!verificarSupabase()) return;
 
     try {
 
         let resultado;
 
+        const dadosEvento = {
 
-        if (estaEditando) {
+            titulo: titulo,
+
+            descricao:
+                descricao || null,
+
+            data: data,
+
+            hora:
+                hora || null,
+
+            local:
+                local || null
+        };
+
+        if (window.eventoEditandoId) {
 
             resultado =
                 await supabaseClient
                     .from("agenda")
-                    .update({
-                        titulo: titulo,
-                        descricao: descricao,
-                        data: data,
-                        hora: hora || null,
-                        local: local
-                    })
-                    .eq("id", window.eventoEditandoId);
-
+                    .update(dadosEvento)
+                    .eq(
+                        "id",
+                        window.eventoEditandoId
+                    );
 
         } else {
 
@@ -1408,20 +1510,16 @@ async function publicarEvento() {
                 await supabaseClient
                     .from("agenda")
                     .insert([
-                        {
-                            titulo: titulo,
-                            descricao: descricao,
-                            data: data,
-                            hora: hora || null,
-                            local: local
-                        }
+                        dadosEvento
                     ]);
         }
 
-
         if (resultado.error) {
 
-            console.error(resultado.error);
+            console.error(
+                "Erro salvar evento:",
+                resultado.error
+            );
 
             mensagem.textContent =
                 "❌ Não foi possível salvar.";
@@ -1432,45 +1530,28 @@ async function publicarEvento() {
             return;
         }
 
-
         mensagem.textContent =
-            estaEditando
-                ? "✅ Evento alterado com sucesso!"
-                : "✅ Evento publicado com sucesso!";
+            window.eventoEditandoId
+            ? "✅ Evento alterado com sucesso!"
+            : "✅ Evento publicado com sucesso!";
 
         mensagem.style.color =
             "#7ee787";
 
-
-        window.eventoEditandoId = null;
-
-
-        limparCamposEventoSemMensagem();
-
-
-        document.getElementById("tituloFormularioEvento")
-            .textContent = "Cadastrar evento";
-
-
-        document.getElementById("descricaoFormularioEvento")
-            .textContent =
-            "O evento publicado aparecerá automaticamente na Agenda dos alunos.";
-
-
-        document.getElementById("botaoSalvarEvento")
-            .textContent = "📅 PUBLICAR EVENTO";
-
+        limparFormularioEvento();
 
         setTimeout(() => {
 
-            carregarAgenda();
+            carregarDestaque();
 
-        }, 500);
-
+        }, 300);
 
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro evento:",
+            erro
+        );
 
         mensagem.textContent =
             "❌ Erro inesperado.";
@@ -1481,42 +1562,20 @@ async function publicarEvento() {
 }
 
 
-/* ========================= */
-/* LIMPAR CAMPOS */
-/* ========================= */
-
-function limparCamposEventoSemMensagem() {
-
-    document.getElementById("adminTitulo")
-        .value = "";
-
-    document.getElementById("adminDescricao")
-        .value = "";
-
-    document.getElementById("adminData")
-        .value = "";
-
-    document.getElementById("adminHora")
-        .value = "";
-
-    document.getElementById("adminLocal")
-        .value = "";
-}
-
-
-/* ========================= */
+/* ================================================== */
 /* EDITAR EVENTO */
-/* ========================= */
+/* ================================================== */
 
 async function editarEvento(id) {
 
     if (!window.adminLogado) {
 
-        alert("🔐 Acesso administrativo necessário.");
+        alert("🔐 Faça login como administrador.");
 
         return;
     }
 
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -1527,10 +1586,12 @@ async function editarEvento(id) {
                 .eq("id", id)
                 .single();
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro carregar evento:",
+                error
+            );
 
             alert(
                 "❌ Não foi possível carregar o evento."
@@ -1539,95 +1600,209 @@ async function editarEvento(id) {
             return;
         }
 
+        document.getElementById(
+            "adminTitulo"
+        ).value =
+            data.titulo || "";
 
-        document.getElementById("adminTitulo")
-            .value = data.titulo || "";
+        document.getElementById(
+            "adminDescricao"
+        ).value =
+            data.descricao || "";
 
+        document.getElementById(
+            "adminData"
+        ).value =
+            data.data || "";
 
-        document.getElementById("adminDescricao")
-            .value = data.descricao || "";
-
-
-        document.getElementById("adminData")
-            .value = data.data || "";
-
-
-        document.getElementById("adminHora")
-            .value =
+        document.getElementById(
+            "adminHora"
+        ).value =
             data.hora
-                ? data.hora.substring(0, 5)
-                : "";
+            ? String(data.hora).substring(0,5)
+            : "";
 
-
-        document.getElementById("adminLocal")
-            .value = data.local || "";
-
+        document.getElementById(
+            "adminLocal"
+        ).value =
+            data.local || "";
 
         window.eventoEditandoId = id;
 
+        document.getElementById(
+            "tituloFormularioEvento"
+        ).textContent =
+            "Editar evento";
 
-        document.getElementById("tituloFormularioEvento")
-            .textContent = "Editar evento";
+        document.getElementById(
+            "descricaoFormularioEvento"
+        ).textContent =
+            "Altere os dados e salve as modificações.";
 
+        document.getElementById(
+            "botaoSalvarEvento"
+        ).textContent =
+            "💾 SALVAR ALTERAÇÕES";
 
-        document.getElementById("descricaoFormularioEvento")
-            .textContent =
-            "Altere os dados abaixo e salve as alterações.";
+        document.getElementById(
+            "botaoCancelarEdicao"
+        ).style.display =
+            "block";
 
-
-        document.getElementById("botaoSalvarEvento")
-            .textContent = "💾 SALVAR ALTERAÇÕES";
-
-
-        document.getElementById("mensagemEvento")
-            .textContent =
+        document.getElementById(
+            "mensagemEvento"
+        ).textContent =
             "✏️ Evento carregado para edição.";
 
-
-        document.getElementById("mensagemEvento")
-            .style.color =
+        document.getElementById(
+            "mensagemEvento"
+        ).style.color =
             "#d6b56a";
 
-
-        document.getElementById("telaAgenda")
-            .classList.remove("ativa");
-
-
-        document.getElementById("telaPainelAdmin")
-            .classList.add("ativa");
-
+        abrirPainelAdmin();
 
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro editar:",
+            erro
+        );
 
-        alert("❌ Erro inesperado.");
+        alert(
+            "❌ Erro inesperado."
+        );
     }
 }
 
 
-/* ========================= */
+/* ================================================== */
+/* CANCELAR EDIÇÃO */
+/* ================================================== */
+
+function cancelarEdicao() {
+
+    window.eventoEditandoId = null;
+
+    const titulo =
+        document.getElementById(
+            "adminTitulo"
+        );
+
+    if (!titulo) return;
+
+    titulo.value = "";
+
+    document.getElementById(
+        "adminDescricao"
+    ).value = "";
+
+    document.getElementById(
+        "adminData"
+    ).value = "";
+
+    document.getElementById(
+        "adminHora"
+    ).value = "";
+
+    document.getElementById(
+        "adminLocal"
+    ).value = "";
+
+    document.getElementById(
+        "tituloFormularioEvento"
+    ).textContent =
+        "Cadastrar evento";
+
+    document.getElementById(
+        "descricaoFormularioEvento"
+    ).textContent =
+        "O evento publicado aparecerá automaticamente na Agenda dos alunos.";
+
+    document.getElementById(
+        "botaoSalvarEvento"
+    ).textContent =
+        "📅 PUBLICAR EVENTO";
+
+    document.getElementById(
+        "botaoCancelarEdicao"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "mensagemEvento"
+    ).textContent = "";
+}
+
+
+function limparFormularioEvento() {
+
+    window.eventoEditandoId = null;
+
+    document.getElementById(
+        "adminTitulo"
+    ).value = "";
+
+    document.getElementById(
+        "adminDescricao"
+    ).value = "";
+
+    document.getElementById(
+        "adminData"
+    ).value = "";
+
+    document.getElementById(
+        "adminHora"
+    ).value = "";
+
+    document.getElementById(
+        "adminLocal"
+    ).value = "";
+
+    document.getElementById(
+        "tituloFormularioEvento"
+    ).textContent =
+        "Cadastrar evento";
+
+    document.getElementById(
+        "descricaoFormularioEvento"
+    ).textContent =
+        "O evento publicado aparecerá automaticamente na Agenda dos alunos.";
+
+    document.getElementById(
+        "botaoSalvarEvento"
+    ).textContent =
+        "📅 PUBLICAR EVENTO";
+
+    document.getElementById(
+        "botaoCancelarEdicao"
+    ).style.display =
+        "none";
+}
+
+
+/* ================================================== */
 /* EXCLUIR EVENTO */
-/* ========================= */
+/* ================================================== */
 
 async function excluirEvento(id) {
 
     if (!window.adminLogado) {
 
-        alert("🔐 Acesso administrativo necessário.");
+        alert(
+            "🔐 Faça login como administrador."
+        );
 
         return;
     }
-
 
     const confirmar =
         confirm(
             "🗑️ Tem certeza que deseja excluir este evento?"
         );
 
-
     if (!confirmar) return;
 
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -1637,30 +1812,35 @@ async function excluirEvento(id) {
                 .delete()
                 .eq("id", id);
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro excluir:",
+                error
+            );
 
             alert(
-                "❌ Não foi possível excluir o evento."
+                "❌ Não foi possível excluir o evento.\n\n" +
+                error.message
             );
 
             return;
         }
 
-
         alert(
             "✅ Evento excluído com sucesso!"
         );
 
-
         await carregarAgenda();
 
+        carregarDestaque();
 
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro excluir:",
+            erro
+        );
 
         alert(
             "❌ Erro inesperado."
@@ -1669,35 +1849,37 @@ async function excluirEvento(id) {
 }
 
 
-/* ========================= */
+/* ================================================== */
 /* PUBLICAR AVISO */
-/* ========================= */
+/* ================================================== */
 
 async function publicarAviso() {
 
     if (!window.adminLogado) {
 
-        alert("🔐 Acesso administrativo necessário.");
+        alert(
+            "🔐 Faça login como administrador."
+        );
+
+        abrirAdmin();
 
         return;
     }
 
-
     const titulo =
-        document.getElementById("avisoTitulo")
-            .value
-            .trim();
-
+        document.getElementById(
+            "avisoTitulo"
+        ).value.trim();
 
     const mensagemTexto =
-        document.getElementById("avisoMensagem")
-            .value
-            .trim();
-
+        document.getElementById(
+            "avisoMensagem"
+        ).value.trim();
 
     const mensagem =
-        document.getElementById("mensagemAviso");
-
+        document.getElementById(
+            "mensagemAviso"
+        );
 
     if (!titulo || !mensagemTexto) {
 
@@ -1710,13 +1892,13 @@ async function publicarAviso() {
         return;
     }
 
-
     mensagem.textContent =
         "🔄 Publicando aviso...";
 
     mensagem.style.color =
         "#c8c3d8";
 
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -1730,10 +1912,12 @@ async function publicarAviso() {
                     }
                 ]);
 
-
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Erro publicar aviso:",
+                error
+            );
 
             mensagem.textContent =
                 "❌ Não foi possível publicar o aviso.";
@@ -1744,24 +1928,26 @@ async function publicarAviso() {
             return;
         }
 
-
         mensagem.textContent =
             "✅ Aviso publicado com sucesso!";
 
         mensagem.style.color =
             "#7ee787";
 
+        document.getElementById(
+            "avisoTitulo"
+        ).value = "";
 
-        document.getElementById("avisoTitulo")
-            .value = "";
-
-        document.getElementById("avisoMensagem")
-            .value = "";
-
+        document.getElementById(
+            "avisoMensagem"
+        ).value = "";
 
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro aviso:",
+            erro
+        );
 
         mensagem.textContent =
             "❌ Erro inesperado.";
@@ -1772,25 +1958,13 @@ async function publicarAviso() {
 }
 
 
-/* ========================= */
-/* FUTUROS */
-/* ========================= */
-
-function futuro(nome) {
-
-    alert(
-        "📱 " +
-        nome +
-        "\n\nEsta função será criada nas próximas etapas."
-    );
-}
-
-
-/* ========================= */
+/* ================================================== */
 /* DESTAQUE */
-/* ========================= */
+/* ================================================== */
 
 async function carregarDestaque() {
+
+    if (!verificarSupabase()) return;
 
     try {
 
@@ -1806,45 +1980,52 @@ async function carregarDestaque() {
                 })
                 .limit(1);
 
-
         if (
             error ||
             !data ||
             data.length === 0
         ) {
 
+            document.getElementById(
+                "tituloDestaque"
+            ).textContent =
+                "Bem-vindo ao Grêmio!";
+
+            document.getElementById(
+                "textoDestaque"
+            ).textContent =
+                "Aqui você poderá acompanhar avisos, eventos, reuniões e tudo que acontece no Grêmio Estudantil.";
+
             return;
         }
-
 
         const evento =
             data[0];
 
-
         document.getElementById(
             "tituloDestaque"
         ).textContent =
-            evento.titulo;
-
+            evento.titulo || "Próximo evento";
 
         let texto = "";
-
 
         if (evento.data) {
 
             texto +=
                 "📅 " +
-                formatarData(evento.data);
+                formatarData(
+                    evento.data
+                );
         }
-
 
         if (evento.hora) {
 
             texto +=
                 " • ⏰ " +
-                evento.hora.substring(0, 5);
+                String(
+                    evento.hora
+                ).substring(0,5);
         }
-
 
         if (evento.local) {
 
@@ -1853,27 +2034,108 @@ async function carregarDestaque() {
                 evento.local;
         }
 
-
         document.getElementById(
             "textoDestaque"
         ).textContent =
             texto;
 
-
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro destaque:",
+            erro
+        );
     }
 }
 
 
-/* ========================= */
-/* INICIAR */
-/* ========================= */
+/* ================================================== */
+/* DATA */
+/* ================================================== */
+
+function formatarData(data) {
+
+    if (!data) return "";
+
+    const partes =
+        String(data).split("-");
+
+    if (partes.length !== 3) {
+
+        return data;
+    }
+
+    return (
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
+    );
+}
+
+
+/* ================================================== */
+/* SEGURANÇA DE TEXTO */
+/* ================================================== */
+
+function escaparHTML(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto == null
+        ? ""
+        : String(texto);
+
+    return div.innerHTML;
+}
+
+
+/* ================================================== */
+/* FUNÇÕES FUTURAS */
+/* ================================================== */
+
+function futuro(nome) {
+
+    alert(
+        "📱 " +
+        nome +
+        "\n\n" +
+        "Esta função será criada nas próximas etapas."
+    );
+}
+
+
+/* ================================================== */
+/* ENTER NO LOGIN */
+/* ================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
+
+        const campoSenha =
+            document.getElementById(
+                "senhaAdmin"
+            );
+
+        if (campoSenha) {
+
+            campoSenha.addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        entrarAdmin();
+                    }
+                }
+            );
+        }
 
         carregarDestaque();
 
@@ -1883,4 +2145,5 @@ document.addEventListener(
 </script>
 
 </body>
+
 </html>
