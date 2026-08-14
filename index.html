@@ -1230,112 +1230,172 @@ document.getElementById("inicio")
 
 async function publicarEvento() {
 
-const titulo =
-document.getElementById("adminTitulo")
-.value.trim();
+    const titulo =
+        document.getElementById("adminTitulo")
+            .value.trim();
 
-const descricao =
-document.getElementById("adminDescricao")
-.value.trim();
+    const descricao =
+        document.getElementById("adminDescricao")
+            .value.trim();
 
-const data =
-document.getElementById("adminData")
-.value;
+    const data =
+        document.getElementById("adminData")
+            .value;
 
-const hora =
-document.getElementById("adminHora")
-.value;
+    const hora =
+        document.getElementById("adminHora")
+            .value;
 
-const local =
-document.getElementById("adminLocal")
-.value.trim();
+    const local =
+        document.getElementById("adminLocal")
+            .value.trim();
 
-const mensagem =
-document.getElementById("mensagemEvento");
+    const mensagem =
+        document.getElementById("mensagemEvento");
 
 
-if (!titulo || !data) {
+    /* ========================= */
+    /* VALIDAÇÃO */
+    /* ========================= */
 
-mensagem.textContent =
-"⚠️ Preencha pelo menos o título e a data.";
+    if (!titulo || !data) {
 
-mensagem.style.color =
-"#d6b56a";
+        mensagem.textContent =
+            "⚠️ Preencha pelo menos o título e a data.";
 
-return;
+        mensagem.style.color =
+            "#d6b56a";
+
+        return;
+    }
+
+
+    mensagem.textContent =
+        window.eventoEditandoId
+            ? "🔄 Salvando alterações..."
+            : "🔄 Publicando evento...";
+
+    mensagem.style.color =
+        "#c8c3d8";
+
+
+    try {
+
+        let resultado;
+
+
+        /* ========================= */
+        /* EDITAR */
+        /* ========================= */
+
+        if (window.eventoEditandoId) {
+
+            resultado =
+                await supabaseClient
+                    .from("agenda")
+                    .update({
+                        titulo: titulo,
+                        descricao: descricao,
+                        data: data,
+                        hora: hora || null,
+                        local: local
+                    })
+                    .eq("id", window.eventoEditandoId);
+
+
+        } else {
+
+            /* ========================= */
+            /* NOVO EVENTO */
+            /* ========================= */
+
+            resultado =
+                await supabaseClient
+                    .from("agenda")
+                    .insert([
+                        {
+                            titulo: titulo,
+                            descricao: descricao,
+                            data: data,
+                            hora: hora || null,
+                            local: local
+                        }
+                    ]);
+        }
+
+
+        if (resultado.error) {
+
+            console.error(resultado.error);
+
+            mensagem.textContent =
+                "❌ Não foi possível salvar.";
+
+            mensagem.style.color =
+                "#ff6b6b";
+
+            return;
+        }
+
+
+        /* ========================= */
+        /* SUCESSO */
+        /* ========================= */
+
+        mensagem.textContent =
+            window.eventoEditandoId
+                ? "✅ Evento alterado com sucesso!"
+                : "✅ Evento publicado com sucesso!";
+
+        mensagem.style.color =
+            "#7ee787";
+
+
+        /* Limpar formulário */
+
+        document.getElementById("adminTitulo")
+            .value = "";
+
+        document.getElementById("adminDescricao")
+            .value = "";
+
+        document.getElementById("adminData")
+            .value = "";
+
+        document.getElementById("adminHora")
+            .value = "";
+
+        document.getElementById("adminLocal")
+            .value = "";
+
+
+        /* Sair do modo edição */
+
+        window.eventoEditandoId = null;
+
+
+        /* Atualizar Agenda */
+
+        setTimeout(() => {
+
+            carregarAgenda();
+
+        }, 700);
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mensagem.textContent =
+            "❌ Erro inesperado.";
+
+        mensagem.style.color =
+            "#ff6b6b";
+
+    }
 
 }
-
-
-mensagem.textContent =
-"🔄 Publicando evento...";
-
-mensagem.style.color =
-"#c8c3d8";
-
-
-try {
-
-const { error } =
-await supabaseClient
-.from("agenda")
-.insert([{
-
-titulo: titulo,
-descricao: descricao,
-data: data,
-hora: hora || null,
-local: local
-
-}]);
-
-
-if (error) {
-
-console.error(error);
-
-mensagem.textContent =
-"❌ Não foi possível publicar o evento.";
-
-mensagem.style.color =
-"#ff6b6b";
-
-return;
-
-}
-
-
-mensagem.textContent =
-"✅ Evento publicado com sucesso!";
-
-mensagem.style.color =
-"#7ee787";
-
-
-document.getElementById("adminTitulo").value = "";
-document.getElementById("adminDescricao").value = "";
-document.getElementById("adminData").value = "";
-document.getElementById("adminHora").value = "";
-document.getElementById("adminLocal").value = "";
-
-
-carregarDestaque();
-
-
-} catch (erro) {
-
-console.error(erro);
-
-mensagem.textContent =
-"❌ Erro inesperado.";
-
-mensagem.style.color =
-"#ff6b6b";
-
-}
-
-}
-
 
 /* ========================= */
 /* PUBLICAR AVISO */
