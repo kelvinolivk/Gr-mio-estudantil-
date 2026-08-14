@@ -1104,7 +1104,130 @@ async function entrarAdmin() {
 
     }
 
+function abrirPainelAdmin() {
 
+    document.getElementById("telaAdmin")
+        .classList.remove("ativa");
+
+    document.getElementById("telaPainelAdmin")
+        .classList.add("ativa");
+
+    document.getElementById("mensagemEvento").textContent = "";
+
+}
+
+
+function sairAdmin() {
+
+    document.getElementById("telaPainelAdmin")
+        .classList.remove("ativa");
+
+    document.getElementById("inicio")
+        .style.display = "block";
+
+}
+
+
+async function publicarEvento() {
+
+    const titulo =
+        document.getElementById("adminTitulo").value.trim();
+
+    const descricao =
+        document.getElementById("adminDescricao").value.trim();
+
+    const data =
+        document.getElementById("adminData").value;
+
+    const hora =
+        document.getElementById("adminHora").value;
+
+    const local =
+        document.getElementById("adminLocal").value.trim();
+
+    const mensagem =
+        document.getElementById("mensagemEvento");
+
+
+    if (!titulo || !data) {
+
+        mensagem.textContent =
+            "⚠️ Preencha pelo menos o título e a data.";
+
+        mensagem.style.color = "#d6b56a";
+
+        return;
+    }
+
+
+    mensagem.textContent =
+        "🔄 Publicando evento...";
+
+    mensagem.style.color =
+        "#c8c3d8";
+
+
+    try {
+
+        const { error } =
+            await supabaseClient
+                .from("agenda")
+                .insert([
+                    {
+                        titulo: titulo,
+                        descricao: descricao,
+                        data: data,
+                        hora: hora || null,
+                        local: local
+                    }
+                ]);
+
+
+        if (error) {
+
+            console.error(error);
+
+            mensagem.textContent =
+                "❌ Não foi possível publicar.";
+
+            mensagem.style.color =
+                "#ff6b6b";
+
+            return;
+        }
+
+
+        mensagem.textContent =
+            "✅ Evento publicado com sucesso!";
+
+        mensagem.style.color =
+            "#7ee787";
+
+
+        document.getElementById("adminTitulo").value = "";
+
+        document.getElementById("adminDescricao").value = "";
+
+        document.getElementById("adminData").value = "";
+
+        document.getElementById("adminHora").value = "";
+
+        document.getElementById("adminLocal").value = "";
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mensagem.textContent =
+            "❌ Erro inesperado.";
+
+        mensagem.style.color =
+            "#ff6b6b";
+
+    }
+
+}
     mensagem.textContent =
         "🔄 Verificando...";
 
