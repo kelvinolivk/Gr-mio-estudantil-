@@ -199,6 +199,8 @@ h1 {
     line-height: 1.6;
 }
 
+/* BOTÕES ADMIN */
+
 .botoes-admin {
     display: flex;
     gap: 10px;
@@ -290,7 +292,6 @@ h1 {
 
 </style>
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
@@ -298,7 +299,9 @@ h1 {
 
 <body>
 
-<!-- INÍCIO -->
+<!-- =========================
+     INÍCIO
+========================= -->
 
 <div id="inicio">
 
@@ -385,7 +388,10 @@ Juntos pela nossa escola.
 
 </div>
 
-<!-- AGENDA -->
+
+<!-- =========================
+     AGENDA
+========================= -->
 
 <div id="telaAgenda" class="tela">
 
@@ -427,7 +433,10 @@ Eventos
 
 </div>
 
-<!-- AVISOS -->
+
+<!-- =========================
+     AVISOS
+========================= -->
 
 <div id="telaAvisos" class="tela">
 
@@ -469,7 +478,10 @@ Mural
 
 </div>
 
-<!-- LOGIN ADMIN -->
+
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
 
 <div id="telaAdmin" class="tela">
 
@@ -531,7 +543,10 @@ class="botao-publicar"
 
 </div>
 
-<!-- PAINEL ADMIN -->
+
+<!-- =========================
+     PAINEL ADMIN
+========================= -->
 
 <div id="telaPainelAdmin" class="tela">
 
@@ -561,7 +576,8 @@ Painel
 
 </div>
 
-<!-- NOVO EVENTO -->
+
+<!-- EVENTO -->
 
 <div class="destaque">
 
@@ -629,9 +645,11 @@ id="botaoEvento"
 
 </div>
 
+
 <div class="separador"></div>
 
-<!-- NOVO AVISO -->
+
+<!-- AVISO -->
 
 <div class="destaque">
 
@@ -675,20 +693,34 @@ id="botaoAviso"
 
 </div>
 
+
 <script>
 
-/* =========================
-   CONTROLE
-========================= */
+/* =====================================================
+   ESTADO ADMIN
+===================================================== */
 
-window.adminLogado = false;
+window.adminLogado =
+sessionStorage.getItem("gremio_admin") === "true";
+
 window.eventoEditandoId = null;
 window.avisoEditandoId = null;
 
 
-/* =========================
+/* =====================================================
+   VERIFICAR ADMIN
+===================================================== */
+
+function adminEstaLogado() {
+
+return sessionStorage.getItem("gremio_admin") === "true";
+
+}
+
+
+/* =====================================================
    TELAS
-========================= */
+===================================================== */
 
 function esconderTelas() {
 
@@ -729,9 +761,9 @@ document.getElementById("inicio")
 }
 
 
-/* =========================
+/* =====================================================
    AGENDA
-========================= */
+===================================================== */
 
 async function abrirAgenda() {
 
@@ -797,12 +829,17 @@ return;
 
 lista.innerHTML = "";
 
+const mostrarBotoes =
+adminEstaLogado();
+
+
 data.forEach(evento => {
 
 const card =
 document.createElement("div");
 
 card.className = "evento";
+
 
 const dataFormatada =
 formatarData(evento.data);
@@ -812,41 +849,48 @@ evento.hora
 ? " • ⏰ " + evento.hora.substring(0,5)
 : "";
 
+
 const local =
 evento.local
-? `<p>📍 ${evento.local}</p>`
+? `<p>📍 ${escapeHTML(evento.local)}</p>`
 : "";
+
 
 const descricao =
 evento.descricao
-? `<p>📝 ${evento.descricao}</p>`
+? `<p>📝 ${escapeHTML(evento.descricao)}</p>`
 : "";
+
 
 let botoesAdmin = "";
 
-if (window.adminLogado === true) {
+
+if (mostrarBotoes) {
 
 botoesAdmin = `
+
 <div class="botoes-admin">
 
 <button
 class="botao-editar"
-onclick="editarEvento('${evento.id}')"
+onclick="editarEvento(${evento.id})"
 >
 ✏️ Editar
 </button>
 
 <button
 class="botao-excluir"
-onclick="excluirEvento('${evento.id}')"
+onclick="excluirEvento(${evento.id})"
 >
 🗑️ Excluir
 </button>
 
 </div>
+
 `;
 
 }
+
 
 card.innerHTML = `
 
@@ -855,7 +899,7 @@ card.innerHTML = `
 </div>
 
 <h3>
-${evento.titulo || ""}
+${escapeHTML(evento.titulo || "")}
 </h3>
 
 ${local}
@@ -865,6 +909,7 @@ ${descricao}
 ${botoesAdmin}
 
 `;
+
 
 lista.appendChild(card);
 
@@ -885,9 +930,9 @@ lista.innerHTML = `
 }
 
 
-/* =========================
+/* =====================================================
    AVISOS
-========================= */
+===================================================== */
 
 async function abrirAvisos() {
 
@@ -954,6 +999,10 @@ return;
 
 lista.innerHTML = "";
 
+const mostrarBotoes =
+adminEstaLogado();
+
+
 data.forEach(aviso => {
 
 const card =
@@ -961,37 +1010,43 @@ document.createElement("div");
 
 card.className = "aviso";
 
+
 const dataCriacao =
 aviso.created_at
 ? new Date(aviso.created_at)
 .toLocaleDateString("pt-BR")
 : "";
 
+
 let botoesAdmin = "";
 
-if (window.adminLogado === true) {
+
+if (mostrarBotoes) {
 
 botoesAdmin = `
+
 <div class="botoes-admin">
 
 <button
 class="botao-editar"
-onclick="editarAviso('${aviso.id}')"
+onclick="editarAviso(${aviso.id})"
 >
 ✏️ Editar
 </button>
 
 <button
 class="botao-excluir"
-onclick="excluirAviso('${aviso.id}')"
+onclick="excluirAviso(${aviso.id})"
 >
 🗑️ Excluir
 </button>
 
 </div>
+
 `;
 
 }
+
 
 card.innerHTML = `
 
@@ -1000,16 +1055,17 @@ card.innerHTML = `
 </div>
 
 <h3>
-${aviso.titulo || ""}
+${escapeHTML(aviso.titulo || "")}
 </h3>
 
 <p>
-${aviso.mensagem || ""}
+${escapeHTML(aviso.mensagem || "")}
 </p>
 
 ${botoesAdmin}
 
 `;
+
 
 lista.appendChild(card);
 
@@ -1030,9 +1086,26 @@ lista.innerHTML = `
 }
 
 
-/* =========================
+/* =====================================================
+   SEGURANÇA VISUAL DO TEXTO
+===================================================== */
+
+function escapeHTML(texto) {
+
+const div =
+document.createElement("div");
+
+div.textContent =
+texto;
+
+return div.innerHTML;
+
+}
+
+
+/* =====================================================
    DATA
-========================= */
+===================================================== */
 
 function formatarData(data) {
 
@@ -1050,9 +1123,9 @@ return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 
-/* =========================
-   ADMIN LOGIN
-========================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 function abrirAdmin() {
 
@@ -1092,6 +1165,7 @@ mensagem.style.color =
 return;
 
 }
+
 
 mensagem.textContent =
 "🔄 Verificando...";
@@ -1141,19 +1215,33 @@ if (senha === data[0].senha) {
 
 window.adminLogado = true;
 
+sessionStorage.setItem(
+"gremio_admin",
+"true"
+);
+
+
 mensagem.textContent =
 "✅ Acesso autorizado!";
 
 mensagem.style.color =
 "#7ee787";
 
+
 setTimeout(() => {
 
 abrirPainelAdmin();
 
-}, 500);
+}, 400);
+
 
 } else {
+
+window.adminLogado = false;
+
+sessionStorage.removeItem(
+"gremio_admin"
+);
 
 mensagem.textContent =
 "❌ Senha incorreta.";
@@ -1178,11 +1266,20 @@ mensagem.style.color =
 }
 
 
-/* =========================
+/* =====================================================
    PAINEL ADMIN
-========================= */
+===================================================== */
 
 function abrirPainelAdmin() {
+
+if (!adminEstaLogado()) {
+
+abrirAdmin();
+
+return;
+
+}
+
 
 document.getElementById("telaAdmin")
 .classList.remove("ativa");
@@ -1203,9 +1300,13 @@ function sairAdmin() {
 
 window.adminLogado = false;
 
-window.eventoEditandoId = null;
+sessionStorage.removeItem(
+"gremio_admin"
+);
 
+window.eventoEditandoId = null;
 window.avisoEditandoId = null;
+
 
 document.getElementById("telaPainelAdmin")
 .classList.remove("ativa");
@@ -1216,19 +1317,30 @@ document.getElementById("inicio")
 }
 
 
-/* =========================
+/* =====================================================
    PUBLICAR / EDITAR EVENTO
-========================= */
+===================================================== */
 
 async function publicarEvento() {
 
+if (!adminEstaLogado()) {
+
+alert("🔐 Faça login como administrador.");
+
+return;
+
+}
+
+
 const titulo =
 document.getElementById("adminTitulo")
-.value.trim();
+.value
+.trim();
 
 const descricao =
 document.getElementById("adminDescricao")
-.value.trim();
+.value
+.trim();
 
 const data =
 document.getElementById("adminData")
@@ -1240,7 +1352,8 @@ document.getElementById("adminHora")
 
 const local =
 document.getElementById("adminLocal")
-.value.trim();
+.value
+.trim();
 
 const mensagem =
 document.getElementById("mensagemEvento");
@@ -1258,8 +1371,13 @@ return;
 
 }
 
+
+const editando =
+window.eventoEditandoId !== null;
+
+
 mensagem.textContent =
-window.eventoEditandoId
+editando
 ? "🔄 Salvando alterações..."
 : "🔄 Publicando evento...";
 
@@ -1271,19 +1389,23 @@ try {
 
 let resultado;
 
-if (window.eventoEditandoId) {
+
+if (editando) {
 
 resultado =
 await supabaseClient
 .from("agenda")
 .update({
+
 titulo: titulo,
 descricao: descricao,
 data: data,
 hora: hora || null,
 local: local
+
 })
 .eq("id", window.eventoEditandoId);
+
 
 } else {
 
@@ -1291,11 +1413,13 @@ resultado =
 await supabaseClient
 .from("agenda")
 .insert([{
+
 titulo: titulo,
 descricao: descricao,
 data: data,
 hora: hora || null,
 local: local
+
 }]);
 
 }
@@ -1315,29 +1439,37 @@ return;
 
 }
 
+
 mensagem.textContent =
-window.eventoEditandoId
+editando
 ? "✅ Evento alterado com sucesso!"
 : "✅ Evento publicado com sucesso!";
 
 mensagem.style.color =
 "#7ee787";
 
+
 limparFormularioEvento();
 
 window.eventoEditandoId = null;
 
-document.getElementById("tituloFormularioEvento")
-.textContent =
+
+document.getElementById(
+"tituloFormularioEvento"
+).textContent =
 "Cadastrar evento";
 
-document.getElementById("botaoEvento")
-.textContent =
+
+document.getElementById(
+"botaoEvento"
+).textContent =
 "📅 PUBLICAR EVENTO";
+
 
 setTimeout(() => {
 
 carregarAgenda();
+carregarDestaque();
 
 }, 500);
 
@@ -1377,11 +1509,20 @@ document.getElementById("adminLocal")
 }
 
 
-/* =========================
+/* =====================================================
    EDITAR EVENTO
-========================= */
+===================================================== */
 
 async function editarEvento(id) {
+
+if (!adminEstaLogado()) {
+
+alert("🔐 Acesso administrativo necessário.");
+
+return;
+
+}
+
 
 try {
 
@@ -1397,7 +1538,9 @@ if (error) {
 
 console.error(error);
 
-alert("❌ Não foi possível carregar o evento.");
+alert(
+"❌ Não foi possível carregar o evento."
+);
 
 return;
 
@@ -1426,55 +1569,89 @@ document.getElementById("adminLocal")
 .value =
 data.local || "";
 
-window.eventoEditandoId = id;
 
-document.getElementById("tituloFormularioEvento")
-.textContent =
+window.eventoEditandoId =
+id;
+
+
+document.getElementById(
+"tituloFormularioEvento"
+).textContent =
 "✏️ Editar evento";
 
-document.getElementById("botaoEvento")
-.textContent =
+
+document.getElementById(
+"botaoEvento"
+).textContent =
 "💾 SALVAR ALTERAÇÕES";
 
-document.getElementById("mensagemEvento")
-.textContent =
+
+document.getElementById(
+"mensagemEvento"
+).textContent =
 "✏️ Evento carregado para edição.";
 
-document.getElementById("mensagemEvento")
-.style.color =
+
+document.getElementById(
+"mensagemEvento"
+).style.color =
 "#d6b56a";
 
-document.getElementById("telaAgenda")
-.classList.remove("ativa");
 
-document.getElementById("telaPainelAdmin")
-.classList.add("ativa");
+document.getElementById(
+"telaAgenda"
+).classList.remove("ativa");
+
+
+document.getElementById(
+"telaPainelAdmin"
+).classList.add("ativa");
+
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
 
 } catch (erro) {
 
 console.error(erro);
 
-alert("❌ Erro inesperado.");
+alert(
+"❌ Erro inesperado."
+);
 
 }
 
 }
-/* =========================
+
+
+/* =====================================================
    EXCLUIR EVENTO
-========================= */
+===================================================== */
 
 async function excluirEvento(id) {
 
-if (window.adminLogado !== true) {
-alert("🔐 Acesso administrativo necessário.");
+if (!adminEstaLogado()) {
+
+alert(
+"🔐 Acesso administrativo necessário."
+);
+
 return;
+
 }
 
-const confirmar = confirm(
+
+const confirmar =
+confirm(
 "🗑️ Tem certeza que deseja excluir este evento?"
 );
 
+
 if (!confirmar) return;
+
 
 try {
 
@@ -1483,6 +1660,7 @@ await supabaseClient
 .from("agenda")
 .delete()
 .eq("id", id);
+
 
 if (error) {
 
@@ -1493,14 +1671,18 @@ alert(
 );
 
 return;
+
 }
+
 
 alert(
 "✅ Evento excluído com sucesso!"
 );
 
+
 await carregarAgenda();
 await carregarDestaque();
+
 
 } catch (erro) {
 
@@ -1515,19 +1697,22 @@ alert(
 }
 
 
-/* =========================
+/* =====================================================
    PUBLICAR / EDITAR AVISO
-========================= */
+===================================================== */
 
 async function publicarAviso() {
 
-if (window.adminLogado !== true) {
+if (!adminEstaLogado()) {
 
-alert("🔐 Faça login como administrador.");
+alert(
+"🔐 Faça login como administrador."
+);
 
 return;
 
 }
+
 
 const titulo =
 document.getElementById("avisoTitulo")
@@ -1556,8 +1741,12 @@ return;
 }
 
 
+const editando =
+window.avisoEditandoId !== null;
+
+
 mensagem.textContent =
-window.avisoEditandoId
+editando
 ? "🔄 Salvando alterações..."
 : "🔄 Publicando aviso...";
 
@@ -1570,9 +1759,7 @@ try {
 let resultado;
 
 
-/* EDITAR AVISO */
-
-if (window.avisoEditandoId) {
+if (editando) {
 
 resultado =
 await supabaseClient
@@ -1585,8 +1772,6 @@ mensagem: mensagemTexto
 })
 .eq("id", window.avisoEditandoId);
 
-
-/* NOVO AVISO */
 
 } else {
 
@@ -1619,7 +1804,7 @@ return;
 
 
 mensagem.textContent =
-window.avisoEditandoId
+editando
 ? "✅ Aviso alterado com sucesso!"
 : "✅ Aviso publicado com sucesso!";
 
@@ -1627,16 +1812,14 @@ mensagem.style.color =
 "#7ee787";
 
 
-/* LIMPAR */
+document.getElementById(
+"avisoTitulo"
+).value = "";
 
-document.getElementById("avisoTitulo")
-.value = "";
+document.getElementById(
+"avisoMensagem"
+).value = "";
 
-document.getElementById("avisoMensagem")
-.value = "";
-
-
-/* SAIR DO MODO EDIÇÃO */
 
 window.avisoEditandoId = null;
 
@@ -1652,8 +1835,6 @@ document.getElementById(
 ).textContent =
 "📢 PUBLICAR AVISO";
 
-
-/* ATUALIZAR LISTA */
 
 await carregarAvisos();
 
@@ -1673,19 +1854,22 @@ mensagem.style.color =
 }
 
 
-/* =========================
+/* =====================================================
    EDITAR AVISO
-========================= */
+===================================================== */
 
 async function editarAviso(id) {
 
-if (window.adminLogado !== true) {
+if (!adminEstaLogado()) {
 
-alert("🔐 Acesso administrativo necessário.");
+alert(
+"🔐 Acesso administrativo necessário."
+);
 
 return;
 
 }
+
 
 try {
 
@@ -1710,17 +1894,20 @@ return;
 }
 
 
-document.getElementById("avisoTitulo")
-.value =
+document.getElementById(
+"avisoTitulo"
+).value =
 data.titulo || "";
 
 
-document.getElementById("avisoMensagem")
-.value =
+document.getElementById(
+"avisoMensagem"
+).value =
 data.mensagem || "";
 
 
-window.avisoEditandoId = id;
+window.avisoEditandoId =
+id;
 
 
 document.getElementById(
@@ -1747,17 +1934,15 @@ document.getElementById(
 "#d6b56a";
 
 
-/* IR PARA O PAINEL */
-
-document.getElementById("telaAvisos")
-.classList.remove("ativa");
-
-
-document.getElementById("telaPainelAdmin")
-.classList.add("ativa");
+document.getElementById(
+"telaAvisos"
+).classList.remove("ativa");
 
 
-/* ROLAR PARA O AVISO */
+document.getElementById(
+"telaPainelAdmin"
+).classList.add("ativa");
+
 
 setTimeout(() => {
 
@@ -1784,15 +1969,17 @@ alert(
 }
 
 
-/* =========================
+/* =====================================================
    EXCLUIR AVISO
-========================= */
+===================================================== */
 
 async function excluirAviso(id) {
 
-if (window.adminLogado !== true) {
+if (!adminEstaLogado()) {
 
-alert("🔐 Acesso administrativo necessário.");
+alert(
+"🔐 Acesso administrativo necessário."
+);
 
 return;
 
@@ -1835,8 +2022,6 @@ alert(
 );
 
 
-/* ATUALIZA A LISTA IMEDIATAMENTE */
-
 await carregarAvisos();
 
 
@@ -1853,9 +2038,9 @@ alert(
 }
 
 
-/* =========================
+/* =====================================================
    DESTAQUE
-========================= */
+===================================================== */
 
 async function carregarDestaque() {
 
@@ -1892,7 +2077,8 @@ data[0];
 document.getElementById(
 "tituloDestaque"
 ).textContent =
-evento.titulo || "Próximo evento";
+evento.titulo ||
+"Próximo evento";
 
 
 let texto = "";
@@ -1930,6 +2116,7 @@ document.getElementById(
 ).textContent =
 texto;
 
+
 } catch (erro) {
 
 console.error(erro);
@@ -1939,9 +2126,9 @@ console.error(erro);
 }
 
 
-/* =========================
+/* =====================================================
    FUTUROS
-========================= */
+===================================================== */
 
 function futuro(nome) {
 
@@ -1954,9 +2141,9 @@ nome +
 }
 
 
-/* =========================
+/* =====================================================
    INICIALIZAÇÃO
-========================= */
+===================================================== */
 
 document.addEventListener(
 "DOMContentLoaded",
@@ -1970,5 +2157,4 @@ carregarDestaque();
 </script>
 
 </body>
-
 </html>
