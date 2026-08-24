@@ -1,22 +1,36 @@
-const SUPABASE_URL =
-"https://fviycyrnixbodpsilxuo.supabase.co";
+(function () {
 
-const SUPABASE_KEY =
-"sb_publishable_MNkJhCDo4ToSb98V2rBPNA_Ubphvhw1";
+    const SUPABASE_URL = "https://fviycyrnixbodpsilxuo.supabase.co";
 
-if (!window.supabase) {
+    const SUPABASE_KEY = "sb_publishable_MNkJhCDo4ToSb98V2rBPNA_Ubphvhw1";
 
-    console.error("Supabase JS não foi carregado.");
+    if (!window.supabase) {
+        console.error("Biblioteca Supabase não foi carregada.");
+        window.supabasePronto = false;
+        return;
+    }
 
-    window.supabaseClient = null;
+    try {
 
-} else {
+        window.supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
-    window.supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
+        window.supabasePronto = true;
+
+        console.log("✅ Supabase conectado com sucesso!");
+
+    } catch (erro) {
+
+        console.error(
+            "❌ Erro ao criar conexão com Supabase:",
+            erro
         );
 
-    console.log("✅ Supabase conectado.");
-}
+        window.supabasePronto = false;
+
+    }
+
+})();
