@@ -1,27 +1,22 @@
-const SUPABASE_URL = "https://fviycyrnixbodpsilxuo.supabase.co";
+const SUPABASE_URL =
+"https://fviycyrnixbodpsilxuo.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_MNkJhCDo4ToSb98V2rBPNA_Ubphvhw1";
+const SUPABASE_KEY =
+"sb_publishable_MNkJhCDo4ToSb98V2rBPNA_Ubphvhw1";
 
-window.supabaseClient = null;
+if (!window.supabase) {
 
-function iniciarSupabase() {
+    console.error("Supabase JS não foi carregado.");
 
-    if (
-        !window.supabase ||
-        typeof window.supabase.createClient !== "function"
-    ) {
-        console.error("❌ Biblioteca do Supabase não carregada.");
-        return false;
-    }
+    window.supabaseClient = null;
 
-    window.supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+} else {
 
-    console.log("✅ Supabase conectado!");
+    window.supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
-    return true;
+    console.log("✅ Supabase conectado.");
 }
-
-window.supabasePronto = iniciarSupabase();
